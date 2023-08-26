@@ -4,44 +4,47 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5f;
-    public Rigidbody body;
-    public float jumpForce;
-    public float groundCheckDistance = 0.1f;
-    public LayerMask groundMask;
-    private bool isGrounded;
-    // Start is called before the first frame update
-    void Start()
+    public float moveSpeed = 8f;
+    public float jumpForce = 12f;
+    public float boostSpeed = 20f;
+    public Transform cameraTransform;
+
+    private Rigidbody rb;
+    private bool isGrounded = false;
+
+    private void Start()
     {
-        body = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundMask);
-        Move();
-    }
-    public void Move()
-    {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        // Ground check using raycast
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.1f);
 
-        // calculate movement
-        Vector3 moveDirection = new Vector3(horizontalInput, 0, verticalInput);
-        if (body.velocity.magnitude > 0.1f)
+        // Get camera's forward and right directions
+        Vector3 cameraForward = cameraTransform.forward;
+        Vector3 cameraRight = cameraTransform.right;
+
+        // Horizontal movement relative to camera
+        float moveInputHorizontal = Input.GetAxis("Horizontal");
+        float moveInputVertical = Input.GetAxis("Vertical");
+        Vector3 moveDirection = (cameraForward * moveInputVertical + cameraRight * moveInputHorizontal).normalized;
+
+        rb.velocity = new Vector3(moveDirection.x * moveSpeed, rb.velocity.y, moveDirection.z * moveSpeed);
+
+        // Look at movement direction
+        if (moveDirection != Vector3.zero)
         {
-            Vector3 target = Camera.main.transform.TransformDirection(moveDirection);
-            target.y = 0f;
-            body.velocity = target * speed;
+            Quaternion targetRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0f, moveDirection.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
         }
-        else
+
+        // Jumping mechanics
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            body.velocity = Vector3.zero;
-        }
-        if (isGrounded && Input.GetButtonDown("Jump"))
-        {
-            body.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
         }
     }
 }
+

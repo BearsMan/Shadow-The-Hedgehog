@@ -6,7 +6,6 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 8f;
     public float jumpForce = 12f;
-    public float boostSpeed = 20f;
     public Transform cameraTransform;
 
     private Rigidbody rb;

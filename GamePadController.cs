@@ -7,12 +7,9 @@ public class GamePadController : MonoBehaviour
 {
     public GameObject controller;
     public Color controllerColor = Color.blue;
-    public Color gamepadColor = Color.red;
-    public Color gamepadColor2 = Color.yellow;
-    public Color gamepadColor3 = Color.green;
+    public Color gamePadColor = Color.red, gamePadColor2 = Color.blue, gamePadColor3 = Color.green, gamePadColor4 = Color.yellow, gamePadColor5 = Color.red;
     public static int numberOfControlButtons = 0;
-    public static bool isButtonPressed = false;
-    public static bool isButtonReleased = false;
+    public static bool isButtonPressed, isButtonReleased = false;
     public Rigidbody body;
     private bool isGrounded = false;
     // Start is called before the first frame update

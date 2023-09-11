@@ -7,7 +7,7 @@ public class CharacterAnimationController : MonoBehaviour
     private Animator anim;
     private Rigidbody body;
     private bool isGrounded;
-    PlayerMovement playerMovement;
+    private PlayerMovement playerMovement;
     // Start is called before the first frame update
     void Start()
     {

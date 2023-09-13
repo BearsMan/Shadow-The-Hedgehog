@@ -9,7 +9,7 @@ public class CharacterAnimationController : MonoBehaviour
     private bool isFlying = false;
     private bool isGrounded;
     private bool isUsingChaosBlast, isUsingChaosSpear = false;
-    private PlayerMovement Movement;
+    private PlayerMovement movement;
     public int blueMeterGaugePowerUp = 0;
     public int redMeterGaugePowerUp = 0;
     // Start is called before the first frame update
@@ -17,13 +17,13 @@ public class CharacterAnimationController : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         body = GetComponent<Rigidbody>();
-        Movement = GetComponent<PlayerMovement>();
+        movement = GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        isGrounded = Movement.isGrounded;
+        isGrounded = movement.isGrounded;
         float horizontalSpeed = new Vector3(body.velocity.x, 0f, body.velocity.z).magnitude;
         if (isGrounded)
         {

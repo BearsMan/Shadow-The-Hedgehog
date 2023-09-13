@@ -6,8 +6,12 @@ public class CharacterAnimationController : MonoBehaviour
 {
     private Animator anim;
     private Rigidbody body;
+    private bool isFlying = false;
     private bool isGrounded;
+    private bool isUsingchaosBlast, isUsingchaosSpear = false;
     private PlayerMovement Movement;
+    public int blueMeterGaugePowerUp = 0;
+    public int redMeterGaugePowerUp = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +28,26 @@ public class CharacterAnimationController : MonoBehaviour
         if (isGrounded)
         {
             anim.SetFloat("Speed", horizontalSpeed);
+            anim.SetBool("Flying", isFlying);
+            Input.GetKeyDown(KeyCode.Q);
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                SpecialAttack();
+            }
+        }
+    }
+    public void SpecialAttack()
+    {
+        if (blueMeterGaugePowerUp >= 100)
+        {
+            // Chaos Control or Chaos Spear Move
+            anim.SetBool("Flying", true);
+        }
+
+        else if (redMeterGaugePowerUp >= 100)
+        {
+            // Chaos Blast
+            anim.SetBool("Flying", false);
         }
     }
 }

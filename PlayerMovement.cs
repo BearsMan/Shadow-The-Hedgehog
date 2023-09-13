@@ -6,10 +6,13 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 8f;
     public float jumpForce = 12f;
+    public int attackSpeed = 0;
     public Transform cameraTransform;
 
     private Rigidbody rb;
-    private bool isGrounded = false;
+    public bool isGrounded = false;
+    public bool canAttack = true;
+    public float attackCoolDown = 1f;
 
     private void Start()
     {
@@ -44,5 +47,22 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
         }
+
+        // Attacks for characters
+        if (Input.GetMouseButtonDown(0) && isGrounded && canAttack)
+        {
+            NormalAttack();
+        }
+    }
+
+    // Setup Normal Attack for Character
+    public void NormalAttack()
+    {
+        canAttack = false;
+        Invoke("ResetAttackCoolDown", attackCoolDown);
+    }
+    private void ResetAttackCoolDown()
+    {
+        canAttack = true;
     }
 }

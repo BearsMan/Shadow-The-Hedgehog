@@ -8,7 +8,7 @@ public class CharacterAnimationController : MonoBehaviour
     private Rigidbody body;
     private bool isFlying = false;
     private bool isGrounded;
-    private bool isUsingchaosBlast, isUsingchaosSpear = false;
+    private bool isUsingChaosBlast, isUsingChaosSpear = false;
     private PlayerMovement Movement;
     public int blueMeterGaugePowerUp = 0;
     public int redMeterGaugePowerUp = 0;

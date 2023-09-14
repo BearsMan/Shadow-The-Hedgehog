@@ -8,11 +8,10 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 12f;
     public int attackSpeed = 0;
     public Transform cameraTransform;
-
-    private Rigidbody rb;
     public bool isGrounded = false;
     public bool canAttack = true;
     public float attackCoolDown = 1f;
+    private Rigidbody rb;
 
     private void Start()
     {

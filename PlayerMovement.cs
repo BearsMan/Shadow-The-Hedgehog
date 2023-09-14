@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 8f;
+    public float moveSpeed = 3f;
     public float jumpForce = 12f;
     public int attackSpeed = 0;
     public Transform cameraTransform;
     public bool isGrounded = false;
     public bool canAttack = true;
     public float attackCoolDown = 1f;
+    public float sprintThreshold = 3f;
+    private float holdTimeSprint = 0f;
+    private bool isSprinting = false;
+
     private Rigidbody rb;
 
     private void Start()
@@ -22,6 +26,25 @@ public class PlayerMovement : MonoBehaviour
     {
         // Ground check using raycast
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.1f);
+        bool isForwardPress = Input.GetAxis("Vertical") > 0;
+        if (isForwardPress)
+        {
+            // Counts the timer
+            holdTimeSprint += Time.deltaTime;
+            // Checks if the button is being held down for 3 seconds.
+            if (holdTimeSprint >= sprintThreshold && !isSprinting)
+            {
+                isSprinting = true;
+                moveSpeed = 5f;
+            }
+        }
+        else
+        {
+            // Sets back to default value.
+            holdTimeSprint = 0f;
+            isSprinting = false;
+            moveSpeed = 3f;
+        }
 
         // Get camera's forward and right directions
         Vector3 cameraForward = cameraTransform.forward;

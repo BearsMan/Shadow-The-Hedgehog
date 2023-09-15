@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 3f;
     public float jumpForce = 12f;
     public int attackSpeed = 0;
+    public Rigidbody body;
     public Transform cameraTransform;
     public bool isGrounded = false;
     public bool canAttack = true;

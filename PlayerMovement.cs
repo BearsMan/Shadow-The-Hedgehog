@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // Basic Player Movement Variables
     public float moveSpeed = 3f;
     public float jumpForce = 12f;
     public int attackSpeed = 0;
@@ -20,11 +21,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        // Updates called at start of frame
         rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
+        // Updates called per frame during Gameplay based on the action.
         // Ground check using raycast
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.1f);
         bool isForwardPress = Input.GetAxis("Vertical") > 0;

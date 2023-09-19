@@ -12,10 +12,12 @@ public class PlayerMovement : MonoBehaviour
     public Transform cameraTransform;
     public bool isGrounded = false;
     public bool canAttack = true;
+    public float shootingTimerCoolDown = 10.0f;
     public float attackCoolDown = 1f;
     public float sprintThreshold = 3f;
     private float holdTimeSprint = 0f;
     private bool isSprinting = false;
+    private CharacterAnimationController animController;
 
     private Rigidbody rb;
 
@@ -23,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Updates called at start of frame
         rb = GetComponent<Rigidbody>();
+        animController = GetComponent<CharacterAnimationController>();
     }
 
     private void Update()
@@ -78,17 +81,32 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && isGrounded && canAttack)
         {
             NormalAttack();
+
+        }
+        if (Input.GetKeyDown(KeyCode.B) && isGrounded && canAttack)
+        {
+            Shoot();
         }
     }
+
 
     // Setup Normal Attack for Character
     public void NormalAttack()
     {
         canAttack = false;
+        animController.isPunching = true;
         Invoke("ResetAttackCoolDown", attackCoolDown);
     }
     private void ResetAttackCoolDown()
     {
         canAttack = true;
+        animController.isShooting = false;
+        animController.isPunching = false;
+    }
+    public void Shoot()
+    {
+        canAttack = false;
+        animController.isShooting = true;
+        Invoke("ResetAttackCoolDown", 1f);
     }
 }

@@ -8,6 +8,8 @@ public class CharacterAnimationController : MonoBehaviour
     private Animator anim;
     private Rigidbody body;
     private bool isFlying = false;
+    public bool isShooting = false;
+    public bool isPunching = false;
     private bool isGrounded;
     private bool isUsingChaosBlast, isUsingChaosSpear = false;
     public float smoothSpeed = 0f;
@@ -41,6 +43,8 @@ public class CharacterAnimationController : MonoBehaviour
             {
                 SpecialAttack();
             }
+            anim.SetBool("Shooting", isShooting);
+            anim.SetBool("Punching", isPunching);
         }
     }
 

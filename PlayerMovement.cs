@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            // Sets thespeed controls back to the default value if the player is not moving.
+            // Sets the speed controls back to the default value if the player is not moving.
             holdTimeSprint = 0f;
             isSprinting = false;
             moveSpeed = 3f;

@@ -18,19 +18,16 @@ public class PlayerMovement : MonoBehaviour
     private float holdTimeSprint = 0f;
     private bool isSprinting = false;
     private CharacterAnimationController animController;
-
     private Rigidbody rb;
-
+    // Start is called before the first frame update
     private void Start()
     {
-        // Updates called at start of frame
         rb = GetComponent<Rigidbody>();
         animController = GetComponent<CharacterAnimationController>();
     }
-
+    // Update is called once per frame
     private void Update()
     {
-        // Updates called per frame during Gameplay based on the action.
         // Ground check using raycast
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.1f);
         bool isForwardPress = Input.GetAxis("Vertical") > 0;
@@ -88,8 +85,6 @@ public class PlayerMovement : MonoBehaviour
             Shoot();
         }
     }
-
-
     // Setup Normal Attack for Character
     public void NormalAttack()
     {

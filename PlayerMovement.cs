@@ -97,12 +97,14 @@ public class PlayerMovement : MonoBehaviour
         animController.isPunching = true;
         Invoke("ResetAttackCoolDown", attackCoolDown);
     }
+    // Function for Resets For Animation Cooldowns.
     private void ResetAttackCoolDown()
     {
         canAttack = true;
         animController.isShooting = false;
         animController.isPunching = false;
     }
+    // Function to shoot with Shadow's Gun.
     public void Shoot()
     {
         canAttack = false;

@@ -18,11 +18,10 @@ public class PlayerMovement : MonoBehaviour
     private float holdTimeSprint = 0f;
     private bool isSprinting = false;
     private CharacterAnimationController animController;
-    private Rigidbody rb;
     // Start is called before the first frame update
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        body = GetComponent<Rigidbody>();
         animController = GetComponent<CharacterAnimationController>();
     }
     // Update is called once per frame
@@ -59,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
         float moveInputVertical = Input.GetAxis("Vertical");
         Vector3 moveDirection = (cameraForward * moveInputVertical + cameraRight * moveInputHorizontal).normalized;
 
-        rb.velocity = new Vector3(moveDirection.x * moveSpeed, rb.velocity.y, moveDirection.z * moveSpeed);
+        body.velocity = new Vector3(moveDirection.x * moveSpeed, body.velocity.y, moveDirection.z * moveSpeed);
 
         // Look at movement direction
         if (moveDirection != Vector3.zero)
@@ -71,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
         // Jumping mechanics
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
+            body.velocity = new Vector3(body.velocity.x, jumpForce, body.velocity.z);
         }
 
         // Attacks for characters

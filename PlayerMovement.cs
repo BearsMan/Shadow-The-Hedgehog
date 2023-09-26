@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    #region
     // Basic Player Movement Variables
     public float moveSpeed = 3f;
     public float jumpForce = 12f;
@@ -18,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private float holdTimeSprint = 0f;
     private bool isSprinting = false;
     private CharacterAnimationController animController;
+    #endregion
     // Start is called before the first frame update
     private void Start()
     {
@@ -48,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
             isSprinting = false;
             moveSpeed = 3f;
         }
-
+        #region
         // Get camera's forward and right directions
         Vector3 cameraForward = cameraTransform.forward;
         Vector3 cameraRight = cameraTransform.right;
@@ -83,8 +85,10 @@ public class PlayerMovement : MonoBehaviour
         {
             Shoot();
         }
+        #endregion
     }
     // Setup Normal Attack for Character
+    #region
     public void NormalAttack()
     {
         canAttack = false;
@@ -105,4 +109,5 @@ public class PlayerMovement : MonoBehaviour
         animController.isShooting = true;
         Invoke("ResetAttackCoolDown", 1f);
     }
+    #endregion
 }

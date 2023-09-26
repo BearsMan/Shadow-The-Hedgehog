@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterAnimationController : MonoBehaviour
 {
+    #region
     // General Variables for player animations
     private Animator anim;
     private Rigidbody body;
@@ -17,19 +18,23 @@ public class CharacterAnimationController : MonoBehaviour
     private PlayerMovement movement;
     public int blueMeterGaugePowerUp = 0;
     public int redMeterGaugePowerUp = 0;
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
         // This is called at the start of the game function.
+        #region
         anim = GetComponent<Animator>();
         body = GetComponent<Rigidbody>();
         movement = GetComponent<PlayerMovement>();
     }
+    #endregion
 
     // Update is called once per frame
     void Update()
     {
         // Called when played per frame.
+        #region
         isGrounded = movement.isGrounded;
         float horizontalSpeed = new Vector3(body.velocity.x, 0f, body.velocity.z).magnitude;
         smoothSpeed = Mathf.Lerp(smoothSpeed, horizontalSpeed, Time.fixedDeltaTime * accelerationSpeed);
@@ -47,8 +52,10 @@ public class CharacterAnimationController : MonoBehaviour
             anim.SetBool("Punching", isPunching);
         }
     }
+    #endregion
 
     // Start area for functions to be called.
+    #region
     public void SpecialAttack()
     {
         if (blueMeterGaugePowerUp >= 100)
@@ -63,4 +70,5 @@ public class CharacterAnimationController : MonoBehaviour
             anim.SetBool("Flying", false);
         }
     }
+    #endregion
 }

@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
         body = GetComponent<Rigidbody>();
         animController = GetComponent<CharacterAnimationController>();
     }
+    private Animator anim;
     // Update is called once per frame
     private void Update()
     {
@@ -89,6 +90,10 @@ public class PlayerMovement : MonoBehaviour
     }
     // Setup Normal Attack for Character
     #region
+    private void InputHandler()
+    {
+        
+    }
     public void NormalAttack()
     {
         canAttack = false;

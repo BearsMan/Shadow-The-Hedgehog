@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody body;
     public Transform cameraTransform;
     public bool isGrounded = false;
+    public bool isJumping = false;
     public bool canAttack = true;
     public float shootingTimerCoolDown = 10.0f;
     public float attackCoolDown = 1f;
@@ -77,12 +78,11 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Attacks for characters
-        if (Input.GetMouseButtonDown(0) && isGrounded && canAttack)
+        if (Input.GetMouseButtonDown(0) && isGrounded)
         {
             NormalAttack();
-
         }
-        if (Input.GetKeyDown(KeyCode.B) && isGrounded && canAttack)
+        if (Input.GetKeyDown(KeyCode.B) && isGrounded)
         {
             Shoot();
         }
@@ -99,6 +99,27 @@ public class PlayerMovement : MonoBehaviour
         canAttack = false;
         animController.isPunching = true;
         Invoke("ResetAttackCoolDown", attackCoolDown);
+    }
+    // Create Homing Attack Controls
+    public void HomingAttack(Transform nearestEnemy)
+    {
+          if (!isGrounded)
+        {
+            transform.position = Vector3.Lerp(transform.position, nearestEnemy.position, 2f);
+
+            // Check if character is jumping with the corresponding key.
+            if (isJumping)
+            {
+                Input.GetKeyDown(KeyCode.A);
+            }
+        }
+    }
+    // Assign enemy vectors
+    public Vector3 FindNearestEnemy()
+    {
+        Vector3 NearestEnemy = transform.position;
+        // This transform returns back to the nearest position
+        return NearestEnemy;
     }
     // Function for Resets For Animation Cooldowns.
     private void ResetAttackCoolDown()

@@ -117,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
     // Find the nearest enemy closest to the player.
-    public Transform FindNearestEnemy()
+    public Transform findNearestEnemy()
     {
         GameObject[] listEnemies = GameObject.FindGameObjectsWithTag("Enemy");
         if (listEnemies.Length == 0)

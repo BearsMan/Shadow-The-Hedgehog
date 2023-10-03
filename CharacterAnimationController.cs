@@ -37,7 +37,7 @@ public class CharacterAnimationController : MonoBehaviour
         #region
         isGrounded = movement.isGrounded;
         float horizontalSpeed = new Vector3(body.velocity.x, 0f, body.velocity.z).magnitude;
-        smoothSpeed = Mathf.Lerp(smoothSpeed, horizontalSpeed, Time.fixedDeltaTime * accelerationSpeed);
+        smoothSpeed = Mathf.Lerp(smoothSpeed, horizontalSpeed, Time.deltaTime * accelerationSpeed);
         {
             // Animations when playing the correct key.
             anim.SetFloat("Speed", smoothSpeed);

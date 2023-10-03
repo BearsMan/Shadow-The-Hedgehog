@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Jobs;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -14,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isGrounded = false;
     public bool isJumping = false;
     public bool canAttack = true;
+    public float detectionRadius = 10f;
     public float shootingTimerCoolDown = 10.0f;
     public float attackCoolDown = 1f;
     public float sprintThreshold = 3f;
@@ -88,12 +90,13 @@ public class PlayerMovement : MonoBehaviour
         }
         #endregion
     }
-    // Setup Normal Attack for Character
     #region
+    // Input for characters handling controls.
     private void InputHandler()
     {
         
     }
+    // Setup Normal Attack for Character
     public void NormalAttack()
     {
         canAttack = false;
@@ -114,12 +117,26 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-    // Assign enemy vectors
-    public Vector3 FindNearestEnemy()
+    // Find the nearest enemy closest to the player.
+    public Transform FindNearestEnemy()
     {
-        Vector3 NearestEnemy = transform.position;
-        // This transform returns back to the nearest position
-        return NearestEnemy;
+        GameObject[] listEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if (listEnemies.Length == 0)
+        {
+            return null;
+        }
+        Transform nearestEnemy = null;
+        float shortestDistance = Mathf.Infinity;
+        foreach (GameObject Enemy in listEnemies)
+        {
+            float distance = Vector3.Distance(transform.position, Enemy.transform.position);
+            if (distance < shortestDistance)
+            {
+                shortestDistance = distance;
+                nearestEnemy = Enemy.transform;
+            }
+        }
+        return nearestEnemy;
     }
     // Function for Resets For Animation Cooldowns.
     private void ResetAttackCoolDown()

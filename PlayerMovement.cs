@@ -21,12 +21,15 @@ public class PlayerMovement : MonoBehaviour
     private float holdTimeSprint = 0f;
     private bool isSprinting = false;
     private CharacterAnimationController animController;
+    private RangeWeapon weapons;
+    public GameObject currentWeapon;
     #endregion
     // Start is called before the first frame update
     private void Start()
     {
         body = GetComponent<Rigidbody>();
         animController = GetComponent<CharacterAnimationController>();
+        weapons = currentWeapon.GetComponent<RangeWeapon>();
     }
     private Animator anim;
     // Update is called once per frame
@@ -137,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
         }
         return nearestEnemy;
     }
-    // Function for Resets For Animation Cooldowns.
+    // Function for Resets on Animation Cooldowns.
     private void ResetAttackCoolDown()
     {
         canAttack = true;
@@ -147,6 +150,7 @@ public class PlayerMovement : MonoBehaviour
     // Function to shoot with Shadow's Gun.
     public void Shoot()
     {
+        weapons.ShootCurrentWeapon();
         canAttack = false;
         animController.isShooting = true;
         Invoke("ResetAttackCoolDown", 1f);

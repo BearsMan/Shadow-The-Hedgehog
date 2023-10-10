@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 88523427b2cadfb4fba0cfb821866b60
+timeCreated: 1485437597
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 82208
+  packageName: Ammunition pack (demo)
+  packageVersion: 1.0
+  assetPath: Assets/Ammunition pack (demo)/Prefabs/Bullet6.prefab
+  uploadId: 165293

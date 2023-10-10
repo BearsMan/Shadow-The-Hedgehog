@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bullets : MonoBehaviour
 {
     // Checks how much speed, and range the weapon has, and uses.
-    public float speed = 3f;
+    public float speed = 10f;
     public float range = 5f;
     // Start is called before the first frame update
     void Start()

@@ -11,10 +11,13 @@ public class RangeWeapon : MonoBehaviour
     public GameObject projectilePrefab;
     public RangeWeapon weaponPrefab;
     public Transform barrel;
+    public Transform offSet;
+    public AudioSource audioSource;
+    public AudioClip gunSound;
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -25,7 +28,12 @@ public class RangeWeapon : MonoBehaviour
     // Target for shooting a weapon with the amount of ammo used.
     public void ShootCurrentWeapon()
     {
-        Instantiate(projectilePrefab, barrel.position, transform.rotation);
+        Instantiate(projectilePrefab, barrel.position, offSet.rotation);
+        if (gunSound && audioSource != null)
+        {
+            audioSource.PlayOneShot(gunSound);
+        }
+        
         if (currentAmmo > 0)
         {
             currentAmmo--;

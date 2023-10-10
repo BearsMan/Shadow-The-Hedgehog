@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0a09be0893b1ec041891d432f2caeda4
+timeCreated: 1485250416
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 82208
+  packageName: Ammunition pack (demo)
+  packageVersion: 1.0
+  assetPath: Assets/Ammunition pack (demo)/Animations/Bullet1(handful)_controller.controller
+  uploadId: 165293

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: af6c407103d925044ac721b1870aef8a
+timeCreated: 1485435987
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 82208
+  packageName: Ammunition pack (demo)
+  packageVersion: 1.0
+  assetPath: Assets/Ammunition pack (demo)/Animations/Bullet6_controller.controller
+  uploadId: 165293

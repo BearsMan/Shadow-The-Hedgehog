@@ -15,7 +15,7 @@ public class PickUpItem : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Pull enum information from WeaponsInfo.
-            //UIManager.DisplayInformation(WeaponsInfo.WeaponType);
+            // UIManager.DisplayInformation(WeaponsInfo.WeaponType);
 
             // Hook into UI Manager.
             if (Input.GetButtonDown("E"))

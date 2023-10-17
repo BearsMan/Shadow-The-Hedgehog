@@ -1,31 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PickUpItem : MonoBehaviour
 {
     public Image itemImage;
-    public GameObject itemPrefab;
-    WeaponsInfo weaponInfo;
     UIManager uiManager;
+    public weaponType weaponTypes;
+    public enum weaponType
+    {
+        lightWeapon, heavyWeapon, meleeWeapon
+    }
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            // Pull enum information from WeaponsInfo.
-            // UIManager.DisplayInformation(WeaponsInfo.WeaponType);
-
-            // Hook into UI Manager.
+            uiManager.DisplayInformation(weaponTypes);
             if (Input.GetButtonDown("E"))
             {
-                Destroy(itemPrefab);
+                Destroy (gameObject);
             }
         }
-    }
-    private void ShowItem()
-    {
-        
     }
 }

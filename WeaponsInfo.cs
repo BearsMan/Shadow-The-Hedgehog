@@ -9,7 +9,7 @@ public class WeaponsInfo : ScriptableObject
     public GameObject projectile;
     public GameObject weapon;
     public int damage;
-    public string WeaponName;
+    public string weaponName;
     public Transform barrel;
     public enum WeaponType
     {

@@ -11,7 +11,7 @@ public class WeaponsInfo : ScriptableObject
     public int damage;
     public string weaponName;
     public Transform barrel;
-    public enum weaponType
+    public enum WeaponType
     {
         lightWeapon, heavyWeapon, meleeWeapon
     }

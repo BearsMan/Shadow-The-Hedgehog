@@ -8,8 +8,8 @@ public class PickUpItem : MonoBehaviour
 {
     public Image itemImage;
     UIManager uiManager;
-    public weaponType weaponTypes;
-    public enum weaponType
+    public WeaponType weaponTypes;
+    public enum WeaponType
     {
         lightWeapon, heavyWeapon, meleeWeapon
     }

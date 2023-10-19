@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PickUpItem : MonoBehaviour
 {
+    public GameObject weaponPrefab;
     public Image itemImage;
     UIManager uiManager;
     public WeaponType weaponTypes;
@@ -20,6 +21,8 @@ public class PickUpItem : MonoBehaviour
             uiManager.DisplayInformation(weaponTypes);
             if (Input.GetButtonDown("E"))
             {
+                PickUpItem weapon = GetComponent<PickUpItem>();
+                other.GetComponent<PlayerMovement>().AddWeapons(weapon);
                 Destroy (gameObject);
             }
         }

@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public int attackSpeed = 0;
     public Rigidbody body;
     public Transform cameraTransform;
+    public Transform weaponAnchor;
     public bool isGrounded = false;
     public bool isJumping = false;
     public bool canAttack = true;
@@ -154,6 +155,14 @@ public class PlayerMovement : MonoBehaviour
         canAttack = false;
         animController.isShooting = true;
         Invoke("ResetAttackCoolDown", 1f);
+    }
+    // Adds weapons to characters
+    public void AddWeapons(PickUpItem Weapons)
+    {
+        Destroy (currentWeapon);
+        GameObject newWeapon = Instantiate(Weapons.weaponPrefab, weaponAnchor);
+        newWeapon = currentWeapon;
+        weapons = currentWeapon.GetComponent<RangeWeapon>();
     }
     #endregion
 }

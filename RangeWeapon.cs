@@ -39,7 +39,9 @@ public class RangeWeapon : MonoBehaviour
             currentAmmo--;
             if (currentAmmo <= 0)
             {
-                // The player's weapon is out of ammo, please replace your weapon.
+                // Check if the weapon is out of ammo.
+                Debug.Log("The player's weapon is out of ammo, please replace your weapon.");
+                
             }
         } 
     }

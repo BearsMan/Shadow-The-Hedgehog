@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
         body = GetComponent<Rigidbody>();
         animController = GetComponent<CharacterAnimationController>();
         weapons = currentWeapon.GetComponent<RangeWeapon>();
+        // currentWeapon = GameObject.Find ("Current Weapon");
     }
     private Animator anim;
     // Update is called once per frame
@@ -159,9 +160,11 @@ public class PlayerMovement : MonoBehaviour
     // Adds weapons to characters
     public void AddWeapons(PickUpItem Weapons)
     {
-        Destroy (currentWeapon);
-        GameObject newWeapon = Instantiate(Weapons.weaponPrefab, weaponAnchor);
+        // Destroy (currentWeapon);
+        GameObject newWeapon = Instantiate(Weapons.weaponPrefab, weaponAnchor.position, weaponAnchor.rotation);
+        // Instantiate(newWeapon, weaponAnchor);
         newWeapon = currentWeapon;
+        currentWeapon.transform.SetParent(weaponAnchor.transform);
         weapons = currentWeapon.GetComponent<RangeWeapon>();
     }
     #endregion

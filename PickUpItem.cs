@@ -10,21 +10,34 @@ public class PickUpItem : MonoBehaviour
     public Image itemImage;
     UIManager uiManager;
     public WeaponType weaponTypes;
+    private bool playerColliding;
+    private GameObject player;
     public enum WeaponType
     {
         lightWeapon, heavyWeapon, meleeWeapon
     }
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            uiManager.DisplayInformation(weaponTypes);
-            if (Input.GetButtonDown("E"))
-            {
+            playerColliding = true;
+            //uiManager.DisplayInformation(weaponTypes);
+            player = other.gameObject;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        playerColliding = false;
+    }
+    private void Update()
+    {
+        if (playerColliding && Input.GetKeyDown(KeyCode.E))
+
+        {
+                Debug.Log("Press E to try to pick up the weapon");
                 PickUpItem weapon = GetComponent<PickUpItem>();
-                other.GetComponent<PlayerMovement>().AddWeapons(weapon);
+                player.GetComponent<PlayerMovement>().AddWeapons(weapon);
                 Destroy (gameObject);
-            }
         }
     }
 }

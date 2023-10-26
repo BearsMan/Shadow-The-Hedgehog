@@ -7,9 +7,9 @@ public class RangeWeapon : MonoBehaviour
     PlayerMovement movement;
     private float currentAmmo = 1000f;
     private float maxAmmo;
-    public GameObject weaponPrefabList;
+    // public GameObject weaponPrefabList;
     public GameObject projectilePrefab;
-    public RangeWeapon weaponPrefab;
+    // public RangeWeapon weaponPrefab;
     public Transform barrel;
     public Transform offSet;
     public AudioSource audioSource;
@@ -28,7 +28,7 @@ public class RangeWeapon : MonoBehaviour
     // Target for shooting a weapon with the amount of ammo used.
     public void ShootCurrentWeapon()
     {
-        Instantiate(projectilePrefab, barrel.position, offSet.rotation);
+        Instantiate(projectilePrefab, barrel.position, barrel.rotation);
         if (gunSound && audioSource != null)
         {
             audioSource.PlayOneShot(gunSound);

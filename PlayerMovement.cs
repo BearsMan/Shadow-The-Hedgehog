@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     #region
     // Basic Player Movement Variables
+    [Header("Movements")]
     public float moveSpeed = 3f;
     public float jumpForce = 12f;
     public int attackSpeed = 0;
@@ -24,14 +25,26 @@ public class PlayerMovement : MonoBehaviour
     private CharacterAnimationController animController;
     private RangeWeapon weapons;
     public GameObject currentWeapon;
+
+    [Header("Audio")]
+    public AudioClip chaosBlast;
+    
+    public AudioClip chaosControl;
+    
+    public AudioClip chaosSpear;
+
+    [Header("")]
+    [Header("")]
+
+    
+    private AudioSource audioSource;
+
+
     #endregion
     // Start is called before the first frame update
     private void Start()
     {
-        body = GetComponent<Rigidbody>();
-        animController = GetComponent<CharacterAnimationController>();
-        weapons = currentWeapon.GetComponent<RangeWeapon>();
-        // currentWeapon = GameObject.Find ("Current Weapon");
+        GetComponents();
     }
     private Animator anim;
     // Update is called once per frame
@@ -160,11 +173,23 @@ public class PlayerMovement : MonoBehaviour
     // Adds weapons to characters
     public void AddWeapons(PickUpItem Weapons)
     {
-        // Destroy (currentWeapon);
-        GameObject newWeapon = Instantiate(Weapons.weaponPrefab, weaponAnchor.position, weaponAnchor.rotation);
+        Destroy (currentWeapon);
+        GameObject newWeapon = Instantiate(Weapons.weaponPrefab, weaponAnchor);
         // Instantiate(newWeapon, weaponAnchor);
-        newWeapon = currentWeapon;
-        currentWeapon.transform.SetParent(weaponAnchor.transform);
+        newWeapon.transform.localPosition = Vector3.zero;
+        newWeapon.transform.localRotation = Quaternion.identity;
+        currentWeapon = newWeapon;
+        weapons = currentWeapon.GetComponent<RangeWeapon>();
+    }
+    public void SoundEffect()
+    {
+
+    }
+    private void GetComponents()
+    {
+        audioSource = GetComponent<AudioSource>();
+        body = GetComponent<Rigidbody>();
+        animController = GetComponent<CharacterAnimationController>();
         weapons = currentWeapon.GetComponent<RangeWeapon>();
     }
     #endregion

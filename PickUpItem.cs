@@ -10,7 +10,7 @@ public class PickUpItem : MonoBehaviour
     public Image itemImage;
     UIManager uiManager;
     public WeaponType weaponTypes;
-    private bool playerColliding;
+    private bool playerColliding = false;
     private GameObject player;
     public enum WeaponType
     {
@@ -31,7 +31,7 @@ public class PickUpItem : MonoBehaviour
     }
     private void Update()
     {
-        if (playerColliding && Input.GetKeyDown(KeyCode.E))
+        if (playerColliding = false && Input.GetKeyDown(KeyCode.E))
 
         {
                 Debug.Log("Press E to try to pick up the weapon");

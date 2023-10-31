@@ -26,20 +26,22 @@ public class PlayerMovement : MonoBehaviour
     private RangeWeapon weapons;
     public GameObject currentWeapon;
 
-    [Header("Audio")]
+    [Header("Attack Audio")]
+    // These audio files should only play whenever the red or blue bars for the attacks are filled, and should never play in a loop.
+    // Plays Audio Source for Attacks
     public AudioClip chaosBlast;
-    
+    // Plays Audio Clip for Chaos Blast when the red bar is filled, and will only fill when the player takes damage.
     public AudioClip chaosControl;
-    
+    // Plays audio clip for "Chaos Control" when the blue bar is filled, and will only fill when the enemies take damage.
     public AudioClip chaosSpear;
-
+    // Plays Audio Clip for the Chaos Spear whenever the blue bar is filled.
     [Header("")]
+    // Plays audio source for Chaos Control.
     [Header("")]
-
+    // Plays audio source for Chaos Spear. "Note" this attack is only used when you have enough rings.
     
     private AudioSource audioSource;
-
-
+    // Ends audio source play after using the correct attacks based on the color on the bar that is being filled.
     #endregion
     // Start is called before the first frame update
     private void Start()
@@ -183,7 +185,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void SoundEffect()
     {
-
+        // Plays the correct sound effect based on the stage played, and the attack patterns being called.
     }
     private void GetComponents()
     {

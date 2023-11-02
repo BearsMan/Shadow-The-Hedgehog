@@ -41,7 +41,7 @@ public class CharacterAnimationController : MonoBehaviour
         {
             // Animations when playing the correct key.
             anim.SetFloat("Speed", smoothSpeed);
-            anim.SetBool("Flying", isFlying);
+            // anim.SetBool("Flying", isFlying);
             Input.GetKeyDown(KeyCode.Q);
             if (Input.GetKeyDown(KeyCode.Q))
             {
@@ -68,6 +68,10 @@ public class CharacterAnimationController : MonoBehaviour
             // Chaos Blast
             anim.SetBool("Flying", false);
         }
+    }
+    public void TakeDamageAnim()
+    {
+        // The player's damage will play based on when it is being hit.
     }
     #endregion
 }

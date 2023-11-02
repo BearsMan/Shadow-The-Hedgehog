@@ -11,7 +11,6 @@ public class RangeWeapon : MonoBehaviour
     public GameObject projectilePrefab;
     // public RangeWeapon weaponPrefab;
     public Transform barrel;
-    public Transform offSet;
     public AudioSource audioSource;
     public AudioClip gunSound;
     // Start is called before the first frame update

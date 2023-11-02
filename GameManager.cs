@@ -6,13 +6,15 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public int rings = 5;
+    public int rings = 5; // Collected at start of stage.
     public float lightBar = 0f; // For all light attack types (blue bar).
     public float darkBar = 0f; // For evil attack types (red bar).
     public int lives = 0;
+    public bool continueGame = false;
+    public bool restart = false;
     [Header("UI Elements")]
-    public Slider lightBarSlider;
-    public Slider darkBarSlider;
+    public Slider lightBarSlider; // This is used for "Chaos Control" or "Chaos Spear" attacks. "Note." Must be filled before the attacks can be called out.
+    public Slider darkBarSlider; // This is used for "Chaos Blast." "Note." Must be filled before the attack can be called out.
     public TextMeshProUGUI ScoreText;
     private int Score;
     public TextMeshProUGUI timer;
@@ -27,7 +29,7 @@ public class GameManager : MonoBehaviour
     {
 
     }
-    public void TakeDamage(float damage)
+    public void PlayerDamage(float damage)
     {
         rings -= 10;
         darkBar += damage;
@@ -56,10 +58,17 @@ public class GameManager : MonoBehaviour
         {
             GameOver();
         }
+        else
+        {
+            rings = 5;
+            darkBar = 0f;
+            lightBar = 0f;
+            // The character will spawn at the last given checkpoint.
+        }
     }
     private void GameOver()
     {
-
+        Application.Quit();
     }
     private void AddScore(int points)
     {

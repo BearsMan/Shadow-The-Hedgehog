@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     private CharacterAnimationController animController;
     private RangeWeapon weapons;
     public GameObject currentWeapon;
+    private static GameManager gameManager;
 
     [Header("Audio")]
     // These audio files should only play whenever the red or blue bars for the attacks are filled, and should never play in a loop.

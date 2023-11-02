@@ -23,6 +23,7 @@ public class PickUpItem : MonoBehaviour
             playerColliding = true;
             //uiManager.DisplayInformation(weaponTypes);
             player = other.gameObject;
+            // Debug.Log("Colliding");
         }
     }
     private void OnTriggerExit(Collider other)
@@ -31,10 +32,9 @@ public class PickUpItem : MonoBehaviour
     }
     private void Update()
     {
-        if (playerColliding = false && Input.GetKeyDown(KeyCode.E))
-
+        if (playerColliding = true && Input.GetKeyDown(KeyCode.E))
         {
-                Debug.Log("Press E to try to pick up the weapon");
+                // Debug.Log("Press E to try to pick up the weapon");
                 PickUpItem weapon = GetComponent<PickUpItem>();
                 player.GetComponent<PlayerMovement>().AddWeapons(weapon);
                 Destroy (gameObject);

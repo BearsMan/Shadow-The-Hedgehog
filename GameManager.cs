@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public int rings = 5; // Collected at start of stage.
+    public int rings = 5; // Collected at the start of the stage.
     public float lightBar = 0f; // For all light attack types (blue bar).
     public float darkBar = 0f; // For evil attack types (red bar).
     public int lives = 0;
@@ -15,8 +15,8 @@ public class GameManager : MonoBehaviour
     [Header("UI Elements")]
     public Slider lightBarSlider; // This is used for "Chaos Control" or "Chaos Spear" attacks. "Note." Must be filled before the attacks can be called out.
     public Slider darkBarSlider; // This is used for "Chaos Blast." "Note." Must be filled before the attack can be called out.
-    public TextMeshProUGUI ScoreText;
-    private int Score;
+    public TextMeshProUGUI scoreText;
+    private int score;
     public TextMeshProUGUI timer;
     // Start is called before the first frame update
     void Start()
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
     }
     private void AddScore(int points)
     {
-        Score += points;
+        score += points;
     }
 }
 

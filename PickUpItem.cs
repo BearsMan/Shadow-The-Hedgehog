@@ -32,7 +32,8 @@ public class PickUpItem : MonoBehaviour
     }
     private void Update()
     {
-        if (playerColliding = true && Input.GetKeyDown(KeyCode.E))
+        if (playerColliding = true && Input.GetKeyDown(KeyCode.E)) // If set to false, the weapon cannot not be picked up by the user.
+        // else if set to true, the weapon can be collected by the user.
         {
                 // Debug.Log("Press E to try to pick up the weapon");
                 PickUpItem weapon = GetComponent<PickUpItem>();

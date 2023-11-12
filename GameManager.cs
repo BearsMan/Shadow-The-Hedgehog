@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public Slider lightBarSlider; // This is used for "Chaos Control" or "Chaos Spear" attacks. "Note." Must be filled before the attacks can be called out.
     public Slider darkBarSlider; // This is used for "Chaos Blast." "Note." Must be filled before the attack can be called out.
     public TextMeshProUGUI scoreText;
-    private int score;
+    private int Score;
     public TextMeshProUGUI timer;
     // Start is called before the first frame update
     void Start()
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
     }
     private void AddScore(int points)
     {
-        score += points;
+        Score += points;
     }
 }
 

@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
     }
     private void GameOver()
     {
-        Application.Quit();
+        Application.Quit(); // Quits the application.
     }
     private void AddScore(int points)
     {

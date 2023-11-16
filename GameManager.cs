@@ -5,19 +5,28 @@ using UnityEngine;
 using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
+    [Header("UI Elements")]
     public int rings = 5; // Collected at the start of the stage.
     private float eplisedTime = 0f; // This show has time it has been since the stage has started.
     public float lightBar = 0f; // For all light attack types (blue bar).
     public float darkBar = 0f; // For evil attack types (red bar).
     public int lives = 0; // Checks how many lives that the character has.
-    [Header("UI Elements")]
+    [Header("Stage Totals")]
+    public int ringTotal;
+    public int heroScore;
+    public int darkScore;
+    public int totalScore;
+    [Header("UI Visuals")]
+
     public Slider lightBarSlider; // This is used for "Chaos Control" or "Chaos Spear" attacks. "Note." Must be filled before the attacks can be called out.
     public Slider darkBarSlider; // This is used for "Chaos Blast." "Note." Must be filled before the attack can be called out.
     public TextMeshProUGUI livesUI; // This is used to show how lives the player has left.
     public TextMeshProUGUI scoreText;
-    private int score;
-    private int timer;
     public TextMeshProUGUI timerUI;
+
+    // Stage scores and timers.
+    private int normalScore;
+    private int timer;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +42,7 @@ public class GameManager : MonoBehaviour
     {
         rings -= 10;
         darkBar += damage;
+        darkScore++;
 
         if (rings >= 10)
         {
@@ -50,6 +60,7 @@ public class GameManager : MonoBehaviour
     public void EnemyDamage(float damage)
     {
         lightBar += damage;
+        heroScore++;
     }
     private void OnDeath()
     {
@@ -72,11 +83,12 @@ public class GameManager : MonoBehaviour
     }
     private void AddScore(int points)
     {
-        score += points;
+        normalScore += points;
+        
     }
     private void HUDTimer()
     {
-        eplisedTime += Time.deltaTime;
+        eplisedTime = Time.realtimeSinceStartup;
         string formattedTime = FormatTime(eplisedTime);
         timerUI.text = formattedTime;
     }
@@ -84,7 +96,7 @@ public class GameManager : MonoBehaviour
     {
         int minutes = Mathf.FloorToInt(time / 60f); // Shown in the UI.
         int seconds = Mathf.FloorToInt(time % 60); // Shown in the UI.
-        int ms = Mathf.FloorToInt(time / 1000) % 1000; // Shown in the UI.
+        int ms = Mathf.FloorToInt(time * 1000) % 100; // Shown in the UI (using a remainder)
         return string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, ms);
         
     }

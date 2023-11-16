@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
     public int rings = 5; // Collected at the start of the stage.
     private float eplisedTime = 0f; // This show has time it has been since the stage has started.
     public float lightBar = 0f; // For all light attack types (blue bar).
@@ -81,11 +80,11 @@ public class GameManager : MonoBehaviour
         string formattedTime = FormatTime(eplisedTime);
         timerUI.text = formattedTime;
     }
-    string FormatTime(float time)
+    private string FormatTime(float time)
     {
-        int minutes = Mathf.FloorToInt(time / 60f);
-        int seconds = Mathf.FloorToInt(time % 60);
-        int ms = Mathf.FloorToInt(time / 1000) % 1000;
+        int minutes = Mathf.FloorToInt(time / 60f); // Shown in the UI.
+        int seconds = Mathf.FloorToInt(time % 60); // Shown in the UI.
+        int ms = Mathf.FloorToInt(time / 1000) % 1000; // Shown in the UI.
         return string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, ms);
         
     }

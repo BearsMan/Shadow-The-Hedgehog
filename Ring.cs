@@ -10,7 +10,7 @@ public class Ring : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        collectParticle.Stop();
+        collectParticle.Stop(); // Stops the particle sound effect from playing once the rings are collected.
     }
 
     // Update is called once per frame
@@ -25,7 +25,7 @@ public class Ring : MonoBehaviour
             gameManager.rings++;
             if (collectParticle != null)
             {
-                collectParticle.Play();
+                collectParticle.Play(); // Plays the particle sound effect each time a ring is collected.
             }
             Destroy (gameObject);
         }

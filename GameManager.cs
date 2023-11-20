@@ -11,11 +11,13 @@ public class GameManager : MonoBehaviour
     public float lightBar = 0f; // For all light attack types (blue bar).
     public float darkBar = 0f; // For evil attack types (red bar).
     public int lives = 0; // Checks how many lives that the character has.
+
     [Header("Stage Totals")]
     public int ringTotal;
     public int heroScore;
     public int darkScore;
     public int totalScore;
+
     [Header("UI Visuals")]
 
     public Slider lightBarSlider; // This is used for "Chaos Control" or "Chaos Spear" attacks. "Note." Must be filled before the attacks can be called out.
@@ -36,12 +38,15 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HUDTimer();
+        HUDTimer(); // Updates the UI timer once per frame while the game is being played.
+                    // If pausing the game, the timer will freeze until the user is ready to continue playing again.
+                    // If the user decides to restart the level, the timer will start back from 00:00:00.
+                    // When the user quits the stage to go back to the main menu, the timer will reset back to default, and the user will have to play the entire level again.
     }
-        public void PlayerDamage(float damage)
+    public void PlayerDamage(float damage)
     {
         rings -= 10;
-        darkBar += damage;
+        darkBar += damage; // When the enemies are damaged, the red bar will increase the time ready to activate Chaos Blast.
         darkScore++;
 
         if (rings >= 10)
@@ -59,7 +64,7 @@ public class GameManager : MonoBehaviour
     }
     public void EnemyDamage(float damage)
     {
-        lightBar += damage;
+        lightBar += damage; // When the enemies are damaged, the blue bar will increase the time ready to activate Chaos Control.
         heroScore++;
     }
     private void OnDeath()
@@ -96,9 +101,9 @@ public class GameManager : MonoBehaviour
     {
         int minutes = Mathf.FloorToInt(time / 60f); // Shown in the UI.
         int seconds = Mathf.FloorToInt(time % 60); // Shown in the UI.
-        int ms = Mathf.FloorToInt(time * 1000) % 100; // Shown in the UI (using a remainder)
-        return string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, ms);
-        
+        int ms = Mathf.FloorToInt(time * 1000) % 100; // Shown in the UI. (using a remainder.)
+        return string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, ms); // Returns timer format in minutes, seconds, and milliseconds.
+
     }
 }
 

@@ -103,7 +103,6 @@ public class GameManager : MonoBehaviour
         int seconds = Mathf.FloorToInt(time % 60); // Shown in the UI.
         int ms = Mathf.FloorToInt(time * 1000) % 100; // Shown in the UI. (using a remainder.)
         return string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, ms); // Returns timer format in minutes, seconds, and milliseconds.
-
     }
 }
 

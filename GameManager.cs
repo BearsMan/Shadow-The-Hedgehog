@@ -13,18 +13,18 @@ public class GameManager : MonoBehaviour
     public int lives = 0; // Checks how many lives that the character has.
 
     [Header("Stage Totals")]
-    public int ringTotal;
-    public int heroScore;
-    public int darkScore;
-    public int totalScore;
+    public int ringTotal; // Total of rings collected at the end of each stage. 100 points are collected per enemy killed, a little extra is collected per object that is thrown.
+    public int heroScore; // Total of hero points collected at the end of each stage, 100 points are collected per enemy killed, a little extra is collected per object that is thrown.
+    public int darkScore; // Total of dark points collected at the end of each stage. 100 points are collected per time damage that the player takes, a little extra is collected per object that is thrown.
+    public int totalScore; // Total time for each stage.
 
     [Header("UI Visuals")]
 
-    public Slider lightBarSlider; // This is used for "Chaos Control" or "Chaos Spear" attacks. "Note." Must be filled before the attacks can be called out.
+    public Slider lightBarSlider; // This is used for "Chaos Control" or "Chaos Spear" attacks. "Note" Must be filled before the attacks can be called out.
     public Slider darkBarSlider; // This is used for "Chaos Blast." "Note." Must be filled before the attack can be called out.
     public TextMeshProUGUI livesUI; // This is used to show how lives the player has left.
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI timerUI;
+    public TextMeshProUGUI scoreText; // This is used to show the scores for each stage that you completed.
+    public TextMeshProUGUI timerUI; // Shows the timer from the UI and the times will be added together based on the scores of the HeroScore, DarkScore, NormalScore, etc.
 
     // Stage scores and timers.
     private int normalScore;
@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
     public void EnemyDamage(float damage)
     {
         lightBar += damage; // When the enemies are damaged, the blue bar will increase the time ready to activate Chaos Control.
-        heroScore++;
+        heroScore++; // Scores are calculated when the enemies are killed in battle, either by a weapon or an object.
     }
     private void OnDeath()
     {

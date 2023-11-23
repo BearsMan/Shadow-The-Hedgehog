@@ -8,8 +8,8 @@ public class GameManager : MonoBehaviour
     [Header("UI Elements")]
     public int rings = 5; // Collected at the start of the stage.
     private float eplisedTime = 0f; // This show has time it has been since the stage has started.
-    public float lightBar = 0f; // For all light attack types (blue bar).
-    public float darkBar = 0f; // For evil attack types (red bar).
+    public float lightBar = 0f; // For all light attack types. (blue bar)
+    public float darkBar = 0f; // For evil attack types. (red bar)
     public int lives = 0; // Checks how many lives that the character has.
 
     [Header("Stage Totals")]
@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
     {
         int minutes = Mathf.FloorToInt(time / 60f); // Shown in the UI.
         int seconds = Mathf.FloorToInt(time % 60); // Shown in the UI.
-        int ms = Mathf.FloorToInt(time * 1000) % 100; // Shown in the UI. (using a remainder.)
+        int ms = Mathf.FloorToInt(time * 1000) % 100; // Shown in the UI. (using a remainder)
         return string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, ms); // Returns timer format in minutes, seconds, and milliseconds.
     }
 }

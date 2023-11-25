@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
     }
     private void GameOver()
     {
-        // Ends the stage when the player dies, and you can select which option to do next. Which is either, continue from the last checkpoint, restart the level, or exit the game, and go back to the main menu.
+        // Ends the stage when the player dies, and you can select which option to do next. Which is either to continue from the last checkpoint, restart the level, or exit the game and go back to the main menu.
     }
     private void AddScore(int points)
     {

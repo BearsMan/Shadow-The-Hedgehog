@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
     public void PlayerDamage(float damage)
     {
         rings -= 10;
-        darkBar += damage; // When the enemies are damaged, the red bar will increase the time ready to activate Chaos Blast.
+        darkBar += damage; // When the player is damaged, the red bar will increase the time ready to activate Chaos Blast.
         darkScore++;
 
         if (rings >= 10)
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
     }
     private void GameOver()
     {
-        
+        // Ends the stage when the player dies, and you can select which option to do next. Which is either, continue from the last checkpoint, restart the level, or exit the game, and go back to the main menu.
     }
     private void AddScore(int points)
     {

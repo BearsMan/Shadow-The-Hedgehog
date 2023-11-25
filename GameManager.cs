@@ -89,7 +89,6 @@ public class GameManager : MonoBehaviour
     private void AddScore(int points)
     {
         normalScore += points;
-        
     }
     private void HUDTimer()
     {

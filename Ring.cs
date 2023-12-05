@@ -5,6 +5,7 @@ using UnityEngine;
 public class Ring : MonoBehaviour
 {
     public AudioClip ringSound;
+    public float maxScale = 10f;
     public ParticleSystem collectParticle;
     private GameManager gameManager;
     public GameObject particle;
@@ -38,10 +39,26 @@ public class Ring : MonoBehaviour
     }
     private void ParticleSound()
     {
-        for (int i = 0; i < 360; i+= 45)
+        for (int i = 0; i < 8; i++)
         {
+            Vector3 direction = Quaternion.Euler(0, i * 45, 0) * transform.forward;
             GameObject ringParticle = Instantiate(particle, transform.position, Quaternion.identity);
-            ringParticle.transform.rotation = Quaternion.Euler(0f, i, 0f);
+            ringParticle.transform.forward = direction;
+            ringParticle.transform.forward = Vector3.zero;
+            StartCoroutine(PushTrail(ringParticle));
         }
+    }
+    private IEnumerator PushTrail(GameObject trail)
+    {
+        float currentScale = 0.0f;
+        Vector3 targetScale = new Vector3(maxScale, maxScale, maxScale);
+        while (currentScale < maxScale)
+        {
+            currentScale += Time.deltaTime;
+            transform.position += transform.forward * Time.deltaTime;
+            // trail.transform.position = Vector3.Lerp(Vector3.zero, targetScale, currentScale / maxScale);
+            yield return null;
+        }
+        Destroy (trail);
     }
 }

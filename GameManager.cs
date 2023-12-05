@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI livesUI; // This is used to show how lives the player has left.
     public TextMeshProUGUI scoreText; // This is used to show the scores for each stage that you completed.
     public TextMeshProUGUI timerUI; // Shows the timer from the UI and the times will be added together based on the scores of the HeroScore, DarkScore, NormalScore, etc.
+    public TextMeshProUGUI ringUI; // Shows the number of rings that the player currently has.
 
     // Stage scores and timers.
     private int normalScore;
@@ -32,7 +33,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        ringUI.text = rings.ToString();
     }
 
     // Update is called once per frame
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour
         {
             OnDeath();
         }
+        ringUI.text = rings.ToString();
     }
     public void EnemyDamage(float damage)
     {

@@ -12,7 +12,6 @@ public class PlayerMovement : MonoBehaviour
     public int attackSpeed = 0;
     public Rigidbody body;
     public Transform cameraTransform;
-    public Transform weaponAnchor;
     public bool isGrounded = false;
     public bool isJumping = false;
     public bool canAttack = true;
@@ -23,9 +22,8 @@ public class PlayerMovement : MonoBehaviour
     private float holdTimeSprint = 0f;
     private bool isSprinting = false;
     private CharacterAnimationController animController;
-    private RangeWeapon weapons;
-    public GameObject currentWeapon;
     private static GameManager gameManager;
+    private WeaponSystem weaponController;
 
     [Header("Audio")]
     // These audio files should only play whenever the red or blue bars for the attacks are filled, and should never play in a loop.
@@ -97,6 +95,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             body.velocity = new Vector3(body.velocity.x, jumpForce, body.velocity.z);
+            animController.JumpAnim();
         }
 
         // Attacks for characters
@@ -106,7 +105,8 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.B) && isGrounded)
         {
-            Shoot();
+            weaponController.Shoot();
+            animController.isShooting = true;
         }
         #endregion
     }
@@ -165,25 +165,6 @@ public class PlayerMovement : MonoBehaviour
         animController.isShooting = false;
         animController.isPunching = false;
     }
-    // Function to shoot with Shadow's Gun.
-    public void Shoot()
-    {
-        weapons.ShootCurrentWeapon();
-        canAttack = false;
-        animController.isShooting = true;
-        Invoke("ResetAttackCoolDown", 1f);
-    }
-    // Adds weapons to characters
-    public void AddWeapons(PickUpItem Weapons)
-    {
-        Destroy (currentWeapon);
-        GameObject newWeapon = Instantiate(Weapons.weaponPrefab, weaponAnchor);
-        // Instantiate(newWeapon, weaponAnchor);
-        newWeapon.transform.localPosition = Vector3.zero;
-        newWeapon.transform.localRotation = Quaternion.identity;
-        currentWeapon = newWeapon;
-        weapons = currentWeapon.GetComponent<RangeWeapon>();
-    }
     public void SoundEffect()
     {
         // Plays the correct sound effect based on the stage played, and the attack patterns being called.
@@ -193,7 +174,7 @@ public class PlayerMovement : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         body = GetComponent<Rigidbody>();
         animController = GetComponent<CharacterAnimationController>();
-        weapons = currentWeapon.GetComponent<RangeWeapon>();
+        weaponController = GetComponent<WeaponSystem>();
     }
     #endregion
 }

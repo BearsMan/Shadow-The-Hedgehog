@@ -29,7 +29,7 @@ public class Ring : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             ParticleSound();
-            gameManager.rings++;
+            gameManager.AddRings();
             if (collectParticle != null)
             {
                 collectParticle.Play(); // Plays the particle sound effect each time a ring is collected.

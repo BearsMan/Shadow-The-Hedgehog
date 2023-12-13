@@ -92,6 +92,15 @@ public class GameManager : MonoBehaviour
     {
         normalScore += points;
     }
+    public void AddRings()
+    {
+        rings++;
+        ringUI.text = rings.ToString();
+    }
+    public void AmmoCounter(int count)
+    {
+        // The weapon ammo counter will reset each time a new weapon is picked up by the user.
+    }
     private void HUDTimer()
     {
         eplisedTime = Time.realtimeSinceStartup;

@@ -37,7 +37,7 @@ public class PickUpItem : MonoBehaviour
         {
                 // Debug.Log("Press E to try to pick up the weapon");
                 PickUpItem weapon = GetComponent<PickUpItem>();
-                player.GetComponent<PlayerMovement>().AddWeapons(weapon);
+                player.GetComponent<WeaponSystem>().AddWeapons(weapon);
                 Destroy (gameObject);
         }
     }

@@ -73,5 +73,9 @@ public class CharacterAnimationController : MonoBehaviour
     {
         // The player's damage will play based on when it is being hit.
     }
+    public void JumpAnim()
+    {
+        anim.SetTrigger("Jump");
+    }
     #endregion
 }

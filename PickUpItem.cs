@@ -21,7 +21,7 @@ public class PickUpItem : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerColliding = true;
-            //uiManager.DisplayInformation(weaponTypes);
+            // uiManager.DisplayInformation(weaponTypes);
             player = other.gameObject;
             // Debug.Log("Colliding");
         }

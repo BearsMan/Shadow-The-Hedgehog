@@ -21,13 +21,14 @@ public class WeaponSystem : MonoBehaviour
     // Adds weapons to characters
     public void AddWeapons(PickUpItem Weapons)
     {
-        Destroy(currentWeapon);
+        Destroy (currentWeapon);
         GameObject newWeapon = Instantiate(Weapons.weaponPrefab, weaponAnchor);
-        // Instantiate(newWeapon, weaponAnchor);
-        newWeapon.transform.localPosition = Vector3.zero;
-        newWeapon.transform.localRotation = Quaternion.identity;
         currentWeapon = newWeapon;
         weapons = currentWeapon.GetComponent<RangeWeapon>();
+        Quaternion offSet = weapons.offSet;
+        // Quaternion offSet2 = Quaternion.Euler(offSet);
+        currentWeapon.transform.localPosition = Vector3.zero;
+        currentWeapon.transform.localRotation = offSet;
     }
     private void ResetAttackCoolDown()
     {

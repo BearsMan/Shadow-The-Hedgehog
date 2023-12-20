@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class RangeWeapon : MonoBehaviour
 {
-    PlayerMovement movement;
+    private PlayerMovement movement;
     private float currentAmmo = 1000f;
     private float maxAmmo;
     // public GameObject weaponPrefabList;
     public GameObject projectilePrefab;
-    // public RangeWeapon weaponPrefab;
+    public RangeWeapon weaponPrefab;
     public Transform barrel;
     public AudioSource audioSource;
     public AudioClip gunSound;
+    public Quaternion offSet;
     // Start is called before the first frame update
     void Start()
     {

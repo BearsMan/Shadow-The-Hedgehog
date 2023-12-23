@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI timerUI; // Shows the timer from the UI and the times will be added together based on the scores of the HeroScore, DarkScore, NormalScore, etc.
     public TextMeshProUGUI ringUI; // Shows the number of rings that the player currently has.
 
+    [Header("Gameplay")]
+
+    private Transform spawnLocation;
     // Stage scores and timers.
     private int normalScore;
     private int timer;
@@ -113,6 +116,10 @@ public class GameManager : MonoBehaviour
         int seconds = Mathf.FloorToInt(time % 60); // Shown in the UI.
         int ms = Mathf.FloorToInt(time * 1000) % 100; // Shown in the UI. (using a remainder)
         return string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, ms); // Returns timer format in minutes, seconds, and milliseconds.
+    }
+    public void SetCheckPoint(Transform location)
+    {
+        spawnLocation = location;
     }
 }
 

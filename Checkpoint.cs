@@ -4,18 +4,14 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
+    public ParticleSystem SparkleControl;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            GameManager spawnManager = FindAnyObjectByType<GameManager>();
-            spawnManager.SetCheckPoint(transform);
-            SpawnRandomItem();
+            GameManager.instance.SetCheckPoint(transform);
+            ParticleSystem particle = Instantiate(SparkleControl, transform);
+            Destroy (particle, 1f);
         }
-
-    }
-    private void SpawnRandomItem()
-    {
-
     }
 }

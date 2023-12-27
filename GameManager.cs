@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
     [Header("UI Elements")]
     public int rings = 5; // Collected at the start of the stage.
     private float eplisedTime = 0f; // This show has time it has been since the stage has started.
@@ -34,6 +35,19 @@ public class GameManager : MonoBehaviour
     private int normalScore;
     private int timer;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+        DontDestroyOnLoad(gameObject);
+    }
     void Start()
     {
         ringUI.text = rings.ToString();
@@ -120,6 +134,7 @@ public class GameManager : MonoBehaviour
     public void SetCheckPoint(Transform location)
     {
         spawnLocation = location;
+        rings += 10;
     }
 }
 

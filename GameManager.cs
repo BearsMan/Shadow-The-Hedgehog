@@ -138,5 +138,3 @@ public class GameManager : MonoBehaviour
         rings += 10;
     }
 }
-
-

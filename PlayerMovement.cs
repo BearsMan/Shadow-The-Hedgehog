@@ -22,11 +22,11 @@ public class PlayerMovement : MonoBehaviour
     private float holdTimeSprint = 0f;
     private bool isSprinting = false;
     private CharacterAnimationController animController;
-    private static GameManager gameManager;
     private WeaponSystem weaponController;
+    private bool inAir;
 
     [Header("Audio")]
-    // These audio files should only play whenever the red or blue bars for the attacks are filled, and should never play in a loop.
+    // These audio files should only play whenever the red or blue bars for the attacks are filled, and it should never play in a loop.
     // Plays Audio Source for Attacks
     public AudioClip chaosBlast;
     // Plays Audio Clip for Chaos Blast when the red bar is filled, and will only fill when the player takes damage.
@@ -42,6 +42,13 @@ public class PlayerMovement : MonoBehaviour
     private AudioSource audioSource;
     // Ends audio source play after using the correct attacks based on the color on the bar that is being filled.
     #endregion
+
+    private enum States
+    {
+        inAir,
+        running,
+        shooting
+    }
     // Start is called before the first frame update
     private void Start()
     {
@@ -81,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
         float moveInputHorizontal = Input.GetAxis("Horizontal");
         float moveInputVertical = Input.GetAxis("Vertical");
         Vector3 moveDirection = (cameraForward * moveInputVertical + cameraRight * moveInputHorizontal).normalized;
-
+        
         body.velocity = new Vector3(moveDirection.x * moveSpeed, body.velocity.y, moveDirection.z * moveSpeed);
 
         // Look at movement direction
@@ -103,10 +110,19 @@ public class PlayerMovement : MonoBehaviour
         {
             NormalAttack();
         }
-        if (Input.GetKeyDown(KeyCode.B) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.B))
         {
             weaponController.Shoot();
             animController.isShooting = true;
+            if (!isGrounded)
+            {
+                moveSpeed = 0f;
+                body.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            }
+        }
+        else if (Input.GetKeyUp(KeyCode.B))
+        {
+            StartCoroutine(FallDelay());
         }
         #endregion
     }
@@ -121,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
     {
         canAttack = false;
         animController.isPunching = true;
-        Invoke("ResetAttackCoolDown", attackCoolDown);
+        Invoke(nameof(ResetAttackCoolDown), attackCoolDown);
     }
     // Create Homing Attack Controls
     public void HomingAttack(Transform nearestEnemy)
@@ -168,6 +184,12 @@ public class PlayerMovement : MonoBehaviour
     public void SoundEffect()
     {
         // Plays the correct sound effect based on the stage played, and the attack patterns being called.
+    }
+
+    private IEnumerator FallDelay()
+    {
+        yield return new WaitForSeconds(5f);
+        body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
     private void GetComponents()
     {

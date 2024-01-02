@@ -45,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
 
     private enum States
     {
+        idle,
         inAir,
         running,
         shooting

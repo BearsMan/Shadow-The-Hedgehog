@@ -47,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
     {
         idle,
         inAir,
+        powerUp,
         running,
         shooting
     }

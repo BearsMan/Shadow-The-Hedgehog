@@ -24,7 +24,7 @@ public class EnemyAI : MonoBehaviour
         if (agent != null)
         {
             agent.SetDestination(target.position); // Note: This will show up as an error in the Unity console window,
-                                                   // but can be ignored as it does not do anything.
+                                                   // but it can be ignored as it does not do anything.
         }
         switch (currentState)
         {

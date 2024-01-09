@@ -9,7 +9,7 @@ public class EnemyAI : MonoBehaviour
     private Transform target = null;
     public enum EnemyStates
     {
-        patrol, attack, idle, chase,
+        idle, patrol, chase, attack
     }
     public EnemyStates currentState;
     // Start is called before the first frame update

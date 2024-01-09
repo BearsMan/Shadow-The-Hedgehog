@@ -7,11 +7,11 @@ public class EnemyAI : MonoBehaviour
     public float speed = 5f;
     private NavMeshAgent agent;
     private Transform target = null;
-    public enum enemyStates
+    public enum EnemyStates
     {
         patrol, attack, idle, chase,
     }
-    public enemyStates currentState;
+    public EnemyStates currentState;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,16 +27,16 @@ public class EnemyAI : MonoBehaviour
         }
         switch (currentState)
         {
-            case enemyStates.patrol:
+            case EnemyStates.patrol:
                 break;
 
-            case enemyStates.attack:
+            case EnemyStates.attack:
                 break;
 
-            case enemyStates.idle:
+            case EnemyStates.idle:
                 break;
 
-            case enemyStates.chase:
+            case EnemyStates.chase:
                 break;
         }
     }

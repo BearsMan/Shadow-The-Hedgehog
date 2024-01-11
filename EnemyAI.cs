@@ -36,16 +36,16 @@ public class EnemyAI : MonoBehaviour
         }
         switch (currentState)
         {
-            case EnemyStates.patrol:
-                break;
-
-            case EnemyStates.attack:
-                break;
-
             case EnemyStates.idle:
                 break;
 
+            case EnemyStates.patrol:
+                break;
+
             case EnemyStates.chase:
+                break;
+
+            case EnemyStates.attack:
                 break;
         }
     }

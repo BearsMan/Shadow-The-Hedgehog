@@ -46,7 +46,7 @@ public class EnemyAI : MonoBehaviour
                 break;
 
             case EnemyStates.chase:
-                Chase(); // The emeny will start chasing your character.
+                Chase(); // The enemy will start chasing your character.
                 break;
 
             case EnemyStates.attack:

@@ -75,7 +75,7 @@ public class EnemyAI : MonoBehaviour
         animController.SetBool("Walking", true);
         if (patrolPoint.Count == 0)
         {
-            Debug.LogWarning("You do not have any patrol points assigned");
+            Debug.LogWarning("You do not have any patrol points assigned.");
             return;
         }
         if (agent.remainingDistance < 0.1f)

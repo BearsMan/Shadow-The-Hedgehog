@@ -200,5 +200,9 @@ public class PlayerMovement : MonoBehaviour
         animController = GetComponent<CharacterAnimationController>();
         weaponController = GetComponent<WeaponSystem>();
     }
+    public void OnHit()
+    {
+        
+    }
     #endregion
 }

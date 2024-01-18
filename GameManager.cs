@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     // Stage scores and timers.
     private int normalScore;
     private int timer;
+    [Header("GameObject")]
+    public GameObject ringsPrefab;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -110,9 +112,30 @@ public class GameManager : MonoBehaviour
     {
         normalScore += points;
     }
+    public void SpawnRings(int rings, Vector3 player)
+    {
+        for (int i = 0; i < rings; i++)
+        {
+            // Instantiate(ringsPrefab, player)
+        }
+    }
     public void AddRings()
     {
         rings++;
+        ringUI.text = rings.ToString();
+    }
+    public void LoseRing(Vector3 player)
+    {
+        if (rings < 10)
+        {
+            SpawnRings(rings, player);
+            rings -= rings;
+        }
+        else
+        {
+            rings -= 10;
+            SpawnRings(rings, player);   
+        }
         ringUI.text = rings.ToString();
     }
     public void AmmoCounter(int count)

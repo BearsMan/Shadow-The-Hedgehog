@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
@@ -10,21 +9,21 @@ public class EnemyAI : MonoBehaviour
     private NavMeshAgent agent;
     private Transform target = null;
     public Transform pathway;
-    public List<Vector3> patrolPoint = new List<Vector3>(); // Each point will show where the enemies go to.
+    public List<Vector3> patrolPoint = new List<Vector3>();
     private int currentWayPoint;
     private Transform player;
     private Animator animController;
     public float chaseRange = 10f;
     public float attackCoolDown = 1f;
-    public float attackRadius;
+    public float attackRadius = 1f;
     public Transform hands;
     public LayerMask playerLayer;
     public enum EnemyStates
     {
         idle, patrol, chase, attack
     }
-    public EnemyStates currentState;
     // Start is called before the first frame update
+    public EnemyStates currentState;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -76,7 +75,7 @@ public class EnemyAI : MonoBehaviour
             // Debug.Log(patrolPoint[i]);
         }
     }
-
+    // This is the start of the patrol function.
     private void Patrol()
     {
         animController.SetBool("Walking", true);
@@ -96,13 +95,13 @@ public class EnemyAI : MonoBehaviour
             ChangeState(EnemyStates.chase);
         }
     }
-
+    // This is the start of the the setting the next way point function.
     private void SetNextWayPoint()
     {
         agent.SetDestination(patrolPoint[currentWayPoint]);
         currentWayPoint = (currentWayPoint + 1) % patrolPoint.Count;
     }
-
+    // This is the start of the chase function.
     private void Chase()
     {
         if (agent.remainingDistance < 0.1f)
@@ -114,16 +113,22 @@ public class EnemyAI : MonoBehaviour
         agent.SetDestination(player.position);
         
     }
-
+    // This is the start of the attack function.
     private void Attack()
     {
         animController.SetTrigger("Punching");
-        Debug.Log("Attack");
+       // Debug.Log("Attack");
         StartCoroutine(AttackCoolDown());
         // Set a cooldown.
         Collider[] hitCollider = Physics.OverlapSphere(hands.position, attackRadius, playerLayer);
+        // Debug.Log(hitCollider);
+        player.GetComponent<PlayerMovement>();
+        foreach (Collider collider in hitCollider)
+        {
+            Debug.Log(collider);
+        }
     }
-   
+   // Detects if the target is following the player.
     private void DetectPlayer()
     {
         float distancePlayer = Vector3.Distance(transform.position, player.position);
@@ -132,15 +137,16 @@ public class EnemyAI : MonoBehaviour
             ChangeState(EnemyStates.chase);
         }
     }
+    // Setting a cool down for each attack being called.
     private IEnumerator AttackCoolDown()
     {
         yield return new WaitForSeconds(attackCoolDown);
         ChangeState(EnemyStates.chase);
     }
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        // Gizmos.DrawWireSphere((hands.position, attackRadius));
+        Gizmos.DrawWireSphere(hands.position, attackRadius);
     }
 }
     

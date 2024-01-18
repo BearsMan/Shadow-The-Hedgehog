@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
+    [Header("Enemy Stats")]
     public float speed = 5f;
     private NavMeshAgent agent;
     private Transform target = null;
@@ -13,6 +15,10 @@ public class EnemyAI : MonoBehaviour
     private Transform player;
     private Animator animController;
     public float chaseRange = 10f;
+    public float attackCoolDown = 1f;
+    public float attackRadius;
+    public Transform hands;
+    public LayerMask playerLayer;
     public enum EnemyStates
     {
         idle, patrol, chase, attack
@@ -50,6 +56,7 @@ public class EnemyAI : MonoBehaviour
                 break;
 
             case EnemyStates.attack:
+                Attack();
                 break;
         }
     }
@@ -73,6 +80,7 @@ public class EnemyAI : MonoBehaviour
     private void Patrol()
     {
         animController.SetBool("Walking", true);
+        animController.SetBool("Running", (false));
         if (patrolPoint.Count == 0)
         {
             Debug.LogWarning("You do not have any patrol points assigned.");
@@ -97,20 +105,25 @@ public class EnemyAI : MonoBehaviour
 
     private void Chase()
     {
-        animController.SetBool("Running", (true));
-        agent.SetDestination(player.position);
         if (agent.remainingDistance < 0.1f)
         {
-            Attack();
+            ChangeState(EnemyStates.attack);
         }
+        animController.SetBool("Running", (true));
+        animController.SetBool("Walking", (false));
+        agent.SetDestination(player.position);
+        
     }
 
     private void Attack()
     {
         animController.SetTrigger("Punching");
+        Debug.Log("Attack");
+        StartCoroutine(AttackCoolDown());
+        // Set a cooldown.
+        Collider[] hitCollider = Physics.OverlapSphere(hands.position, attackRadius, playerLayer);
     }
-}
-    /*
+   
     private void DetectPlayer()
     {
         float distancePlayer = Vector3.Distance(transform.position, player.position);
@@ -119,5 +132,15 @@ public class EnemyAI : MonoBehaviour
             ChangeState(EnemyStates.chase);
         }
     }
+    private IEnumerator AttackCoolDown()
+    {
+        yield return new WaitForSeconds(attackCoolDown);
+        ChangeState(EnemyStates.chase);
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        // Gizmos.DrawWireSphere((hands.position, attackRadius));
+    }
 }
-    */
+    

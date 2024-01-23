@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI ringUI; // Shows the number of rings that the player currently has.
 
     [Header("Gameplay")]
-
+    public GameObject player;
     private Transform spawnLocation;
     // Stage scores and timers.
     private int normalScore;
@@ -62,6 +62,11 @@ public class GameManager : MonoBehaviour
                     // If pausing the game, the timer will freeze until the user is ready to continue playing again.
                     // If the user decides to restart the level, the timer will start back from 00:00:00.
                     // When the user quits the stage to go back to the main menu, the timer will reset back to default, and the user will have to play the entire level again.
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            SpawnRings(10, new Vector3(9700, 80.5f, 240)); // Each rings is sets of 10 per offset count.
+            // Debug.Log("Spawn Rings"); // This is only used for debugging.
+        }
     }
     public void PlayerDamage(float damage)
     {
@@ -116,7 +121,8 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < rings; i++)
         {
-            // Instantiate(ringsPrefab, player)
+            Vector3 offSet = player + new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2f, 2f)); ;
+            GameObject newRings = Instantiate(ringsPrefab, offSet, (Quaternion.identity));
         }
     }
     public void AddRings()
@@ -134,7 +140,7 @@ public class GameManager : MonoBehaviour
         else
         {
             rings -= 10;
-            SpawnRings(rings, player);   
+            SpawnRings(10, player);   
         }
         ringUI.text = rings.ToString();
     }

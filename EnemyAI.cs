@@ -126,6 +126,7 @@ public class EnemyAI : MonoBehaviour
         foreach (Collider collider in hitCollider)
         {
             Debug.Log(collider);
+            GameManager.instance.LoseRing(player.position);
         }
     }
    // Detects if the target is following the player.

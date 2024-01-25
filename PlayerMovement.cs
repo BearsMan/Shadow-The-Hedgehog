@@ -38,8 +38,13 @@ public class PlayerMovement : MonoBehaviour
     // Plays audio source for Chaos Control.
     [Header("")]
     // Plays audio source for Chaos Spear. "Note" this attack is only used when you have enough rings.
-    
+
+    [Header("")]
+    // This sound should only play when the player loses a certain amount of rings after the enemy hits you.
+
     private AudioSource audioSource;
+    public AudioClip ringGain;
+    public AudioClip ringLost;
     // Ends audio source play after using the correct attacks based on the color on the bar that is being filled.
     #endregion
 
@@ -60,6 +65,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            OnHit();
+            // Debug.Log("Spawn Rings"); // This is only used for debugging.
+        }
         // Ground check using raycast
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.1f);
         bool isForwardPress = Input.GetAxis("Vertical") > 0;
@@ -202,7 +212,9 @@ public class PlayerMovement : MonoBehaviour
     }
     public void OnHit()
     {
-        
+        audioSource.PlayOneShot(ringLost);
+        GameManager.instance.PlayerDamage(10f, (transform.position));
+        animController.TakeDamageAnim();
     }
     #endregion
 }

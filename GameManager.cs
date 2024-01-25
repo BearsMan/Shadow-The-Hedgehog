@@ -62,30 +62,12 @@ public class GameManager : MonoBehaviour
                     // If pausing the game, the timer will freeze until the user is ready to continue playing again.
                     // If the user decides to restart the level, the timer will start back from 00:00:00.
                     // When the user quits the stage to go back to the main menu, the timer will reset back to default, and the user will have to play the entire level again.
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            SpawnRings(10, new Vector3(9700, 80.5f, 240)); // Each rings is sets of 10 per offset count.
-            // Debug.Log("Spawn Rings"); // This is only used for debugging.
-        }
     }
-    public void PlayerDamage(float damage)
+    public void PlayerDamage(float damage, Vector3 player)
     {
-        rings -= 10;
         darkBar += damage; // When the player is damaged, the red bar will increase the time ready to activate Chaos Blast.
         darkScore++;
-
-        if (rings >= 10)
-        {
-            rings -= 10;
-        }
-        else if (rings < 10)
-        {
-            rings -= rings;
-        }
-        else if (rings <= 0)
-        {
-            OnDeath();
-        }
+        LoseRing(player);
         ringUI.text = rings.ToString();
     }
     public void EnemyDamage(float damage)
@@ -121,7 +103,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < rings; i++)
         {
-            Vector3 offSet = player + new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2f, 2f)); ;
+            Vector3 offSet = player + new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2f, 2f));
             GameObject newRings = Instantiate(ringsPrefab, offSet, (Quaternion.identity));
         }
     }
@@ -137,12 +119,15 @@ public class GameManager : MonoBehaviour
             SpawnRings(rings, player);
             rings -= rings;
         }
-        else
+        else if (rings >= 10)
         {
             rings -= 10;
-            SpawnRings(10, player);   
+            SpawnRings(10, player);
         }
-        ringUI.text = rings.ToString();
+        else if (rings <= 0)
+        {
+            OnDeath();
+        }
     }
     public void AmmoCounter(int count)
     {

@@ -8,7 +8,7 @@ public class TakeDamage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        FindFirstObjectByType(typeof(GameManager));
+        
     }
 
     // Update is called once per frame
@@ -25,7 +25,7 @@ public class TakeDamage : MonoBehaviour
             {
                 // Gets the component for when the player is takes damage.
                 float damage = 0;
-                manager.PlayerDamage(damage);
+                // manager.PlayerDamage(damage);
                 charAnimController.TakeDamageAnim();
             }
         }

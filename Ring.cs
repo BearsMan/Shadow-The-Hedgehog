@@ -5,6 +5,7 @@ using UnityEngine;
 public class Ring : MonoBehaviour
 {
     public AudioClip ringSound;
+    public bool isFlashing = false;
     public float maxScale = 10f;
     public ParticleSystem collectParticle;
     private GameManager gameManager;
@@ -28,12 +29,9 @@ public class Ring : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            ParticleSound();
+            ParticleSystem particle = Instantiate(collectParticle, transform);
+            Destroy(particle, 1f);
             gameManager.AddRings();
-            if (collectParticle != null)
-            {
-                collectParticle.Play(); // Plays the particle sound effect each time a ring is collected.
-            }
             Destroy (gameObject);
         }
     }
@@ -60,5 +58,24 @@ public class Ring : MonoBehaviour
             yield return null;
         }
         Destroy (trail);
+    }
+    public void FlashAndDisappear()
+    {
+        if (isFlashing)
+        {
+            StartCoroutine(FlashDelay(1f));
+        }
+        StartCoroutine(DelayAndDestroy(5f));
+    }
+    private IEnumerator DelayAndDestroy(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy (gameObject);
+
+    }
+    private IEnumerator FlashDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy (gameObject);
     }
 }

@@ -105,6 +105,7 @@ public class GameManager : MonoBehaviour
         {
             Vector3 offSet = player + new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2f, 2f));
             GameObject newRings = Instantiate(ringsPrefab, offSet, (Quaternion.identity));
+
         }
     }
     public void AddRings()

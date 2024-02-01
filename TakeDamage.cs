@@ -24,7 +24,7 @@ public class TakeDamage : MonoBehaviour
             if (other.gameObject.CompareTag("Enemy")|| other.gameObject.CompareTag("Projectile"))
             {
                 // Gets the component for when the player is takes damage.
-                float damage = 0;
+                float damage = 0f;
                 // manager.PlayerDamage(damage);
                 charAnimController.TakeDamageAnim();
             }

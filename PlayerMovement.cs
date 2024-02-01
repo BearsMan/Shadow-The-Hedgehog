@@ -134,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (Input.GetKeyUp(KeyCode.B))
         {
-            StartCoroutine(FallDelay());
+            StartCoroutine(FallDelay(5f));
         }
         #endregion
     }
@@ -198,10 +198,11 @@ public class PlayerMovement : MonoBehaviour
         // Plays the correct sound effect based on the stage played, and the attack patterns being called.
     }
 
-    private IEnumerator FallDelay()
+    private IEnumerator FallDelay(float seconds)
     {
-        yield return new WaitForSeconds(5f);
-        body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        
+        yield return new WaitForSeconds(seconds); // Re-use the delay at anytime.
+        body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ; // This will auto-unfreeze the movement.
     }
     private void GetComponents()
     {
@@ -215,6 +216,9 @@ public class PlayerMovement : MonoBehaviour
         audioSource.PlayOneShot(ringLost);
         GameManager.instance.PlayerDamage(10f, (transform.position));
         animController.TakeDamageAnim();
+        // Debug.Log("Input Press"); // Select an input when the letter I is pressed.
+        body.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        StartCoroutine(FallDelay(1.5f));
     }
     #endregion
 }

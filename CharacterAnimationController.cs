@@ -73,6 +73,8 @@ public class CharacterAnimationController : MonoBehaviour
     {
         // The player's damage will play based on when it is being hit.
         anim.SetTrigger("On Hit");
+        Debug.Log("Player is attacked"); // Current animation is bugged at this time.
+       // body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ; // Try and set a delay.
     }
     public void JumpAnim()
     {

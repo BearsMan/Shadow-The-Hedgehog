@@ -6,6 +6,8 @@ public class Ring : MonoBehaviour
 {
     public AudioClip ringSound;
     public bool isFlashing = false;
+    public bool isSpinning = false;
+    public float rotationSpeed = 100000f;
     public float maxScale = 10f;
     public ParticleSystem collectParticle;
     private GameManager gameManager;
@@ -23,7 +25,10 @@ public class Ring : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (isSpinning)
+        {
+            transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -61,21 +66,18 @@ public class Ring : MonoBehaviour
     }
     public void FlashAndDisappear()
     {
-        if (isFlashing)
-        {
-            StartCoroutine(FlashDelay(1f));
-        }
+        isSpinning = true;
+        InvokeRepeating("ToggleVisibility", Time.deltaTime, 0.5f);
         StartCoroutine(DelayAndDestroy(5f));
+    }
+    void ToggleVisibility()
+    {
+       gameObject.SetActive(!gameObject.activeSelf);
     }
     private IEnumerator DelayAndDestroy(float delay)
     {
         yield return new WaitForSeconds(delay);
         Destroy (gameObject);
 
-    }
-    private IEnumerator FlashDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        Destroy (gameObject);
     }
 }

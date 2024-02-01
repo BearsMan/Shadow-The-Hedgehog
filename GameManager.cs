@@ -104,8 +104,12 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < rings; i++)
         {
             Vector3 offSet = player + new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2f, 2f));
+            Vector3 initialPosition = player;
+            float angle = 45f * Mathf.Deg2Rad;
+          // Vector3 initialVelocity = new Vector3(initialPosition * Mathf.Cos(angle), 5f * Mathf.Sin(angle), 0);
             GameObject newRings = Instantiate(ringsPrefab, offSet, (Quaternion.identity));
-
+            Ring thisRing = newRings.GetComponent<Ring>();
+            thisRing.FlashAndDisappear();
         }
     }
     public void AddRings()

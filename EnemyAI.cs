@@ -30,7 +30,7 @@ public class EnemyAI : MonoBehaviour
         animController = GetComponent<Animator>();
         player = GameObject.FindWithTag("Player").transform;
         GetWayPoint();
-        ChangeState(EnemyStates.patrol); // Patrolling are when enemies are moving around until they ball back up again.
+        ChangeState(EnemyStates.patrol); // Patrolling is when enemies are moving around until they ball back up again.
     }
 
     // Update is called once per frame

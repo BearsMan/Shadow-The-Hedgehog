@@ -12,10 +12,16 @@ public class Ring : MonoBehaviour
     public ParticleSystem collectParticle;
     private GameManager gameManager;
     public GameObject particle;
+    private Vector3 initialPosition;
+    private Vector3 offSet;
     // Start is called before the first frame update
     void Start()
     {
         collectParticle.Stop(); // Stops the particle sound effect from playing once the rings are collected.
+        offSet = transform.position + new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2f, 2f));
+        initialPosition = transform.position;
+        float angle = 45f * Mathf.Deg2Rad;
+        Vector3 initialVelocity = new Vector3(0 * Mathf.Cos(angle), 5f * Mathf.Sin(angle), 0);
     }
     private void Awake()
     {
@@ -28,6 +34,9 @@ public class Ring : MonoBehaviour
         if (isSpinning)
         {
             transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+            float time = Time.time - Time.fixedTime;
+           // Vector3 newPosition = initialPosition * time + (0.5f * Physics.gravity * time * time);
+           // transform.position = newPosition;
         }
     }
     private void OnTriggerEnter(Collider other)

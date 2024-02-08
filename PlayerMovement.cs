@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public float sprintThreshold = 3f;
     private float holdTimeSprint = 0f;
     private bool isSprinting = false;
+    private bool canShoot = true; // Sets to false when player is hit or knocked out.
     private CharacterAnimationController animController;
     private WeaponSystem weaponController;
     private bool inAir;
@@ -122,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
         {
             NormalAttack();
         }
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.B )&& canShoot)
         {
             weaponController.Shoot();
             animController.isShooting = true;
@@ -202,6 +203,7 @@ public class PlayerMovement : MonoBehaviour
     {
         
         yield return new WaitForSeconds(seconds); // Re-use the delay at anytime.
+        canShoot = true;
         body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ; // This will auto-unfreeze the movement.
     }
     private void GetComponents()
@@ -213,6 +215,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void OnHit()
     {
+        canShoot = false;
         audioSource.PlayOneShot(ringLost);
         GameManager.instance.PlayerDamage(10f, (transform.position));
         animController.TakeDamageAnim();

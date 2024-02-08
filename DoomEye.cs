@@ -8,7 +8,6 @@ public class DoomEye : MonoBehaviour
 {
     private NavMeshAgent agent;
     private Transform target = null;
-    public Transform pathway;
     private Transform player;
     [SerializeField] private bool canMove = true;
     public enum EnemyStates
@@ -19,7 +18,9 @@ public class DoomEye : MonoBehaviour
     public EnemyStates currentState;
     void Start()
     {
-        
+        agent = GetComponent<NavMeshAgent>();
+        player = GameObject.FindWithTag("Player").transform;
+        ChangeState(EnemyStates.chase);
     }
 
     // Update is called once per frame
@@ -28,6 +29,7 @@ public class DoomEye : MonoBehaviour
         switch (currentState)
         {
             case EnemyStates.idle:
+                Idle();
                 break;
 
             case EnemyStates.chase:
@@ -42,12 +44,18 @@ public class DoomEye : MonoBehaviour
         if (agent.remainingDistance < 0.1f)
         {
             ChangeState(EnemyStates.idle);
-                
         }
         agent.SetDestination(player.position);
     
     }
-    
+    private void Idle()
+    {
+        if (agent.remainingDistance > 0.1f)
+        {
+            ChangeState(EnemyStates.chase);
+        }
+    }
+
     public void ChangeState(EnemyStates newState)
     {
         currentState = newState;

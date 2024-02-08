@@ -104,7 +104,7 @@ public class EnemyAI : MonoBehaviour
     // This is the start of the chase function.
     private void Chase()
     {
-        if (agent.remainingDistance < 0.1f)
+        if (agent.remainingDistance < 2f)
         {
             ChangeState(EnemyStates.attack);
         }
@@ -118,16 +118,20 @@ public class EnemyAI : MonoBehaviour
     {
         animController.SetTrigger("Punching");
        // Debug.Log("Attack");
-        StartCoroutine(AttackCoolDown());
+        // Physics.OverlapSphere(hands.position, attackRadius, playerLayer);
         // Set a cooldown.
         Collider[] hitCollider = Physics.OverlapSphere(hands.position, attackRadius, playerLayer);
         // Debug.Log(hitCollider);
-        player.GetComponent<PlayerMovement>();
-        foreach (Collider collider in hitCollider)
+        PlayerMovement pMovement = player.GetComponent<PlayerMovement>();
+        foreach (Collider shadow in hitCollider)
         {
-            Debug.Log(collider);
-            GameManager.instance.LoseRing(player.position);
+            // Debug.Log(collider);
+            // Debug.Log("HIT");
+            pMovement.OnHit();
+            // GameManager.instance.LoseRing(player.position);
         }
+        StartCoroutine(AttackCoolDown());
+        ChangeState(EnemyStates.chase);
     }
    // Detects if the target is following the player.
     private void DetectPlayer()

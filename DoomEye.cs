@@ -9,7 +9,7 @@ public class DoomEye : MonoBehaviour
     private NavMeshAgent agent;
     private Transform target = null;
     private Transform player;
-    [SerializeField] private bool canMove = true;
+    private bool canMove = true;
     public enum EnemyStates
     {
         idle, chase

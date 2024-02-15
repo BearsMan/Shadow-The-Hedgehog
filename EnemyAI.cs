@@ -104,14 +104,16 @@ public class EnemyAI : MonoBehaviour
     // This is the start of the chase function.
     private void Chase()
     {
-        if (agent.remainingDistance < 2f)
+        if (agent.remainingDistance < agent.stoppingDistance)
         {
             ChangeState(EnemyStates.attack);
         }
-        animController.SetBool("Running", (true));
-        animController.SetBool("Walking", (false));
-        agent.SetDestination(player.position);
-        
+
+        {
+            animController.SetBool("Running", (true));
+            animController.SetBool("Walking", (false));
+            agent.SetDestination(player.position);
+        }
     }
     // This is the start of the attack function.
     private void Attack()
@@ -131,7 +133,10 @@ public class EnemyAI : MonoBehaviour
             // GameManager.instance.LoseRing(player.position);
         }
         StartCoroutine(AttackCoolDown());
-        ChangeState(EnemyStates.chase);
+        if (agent.remainingDistance >= agent.stoppingDistance)
+        {
+            ChangeState(EnemyStates.chase);
+        }
     }
    // Detects if the target is following the player.
     private void DetectPlayer()

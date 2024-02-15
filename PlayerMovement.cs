@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     private CharacterAnimationController animController;
     private WeaponSystem weaponController;
     private bool inAir;
-
+    private States currentStates;
     [Header("Audio")]
     // These audio files should only play whenever the red or blue bars for the attacks are filled, and it should never play in a loop.
     // Plays Audio Source for Attacks
@@ -51,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
     private enum States
     {
+        flying,
         idle,
         inAir,
         powerUp,
@@ -61,11 +62,28 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         GetComponents();
+        currentStates = States.idle;
     }
     private Animator anim;
     // Update is called once per frame
     private void Update()
     {
+        // Start of Flying animation when transforming into Super Shadow.
+        switch (currentStates)
+        {
+            case States.idle:
+                break;
+            case States.shooting:
+                break;
+            case States.inAir:
+                break;
+            case States.powerUp:
+                break;
+            case States.running:
+                break;
+            case States.flying: 
+                break;
+        }
         if (Input.GetKeyDown(KeyCode.I))
         {
             OnHit();

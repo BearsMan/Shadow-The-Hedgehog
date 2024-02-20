@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform cameraTransform;
     public bool isGrounded = false;
     public bool isJumping = false;
+    public bool isFlying = false;
     public bool canAttack = true;
     public float detectionRadius = 10f;
     public float shootingTimerCoolDown = 10.0f;
@@ -22,6 +23,9 @@ public class PlayerMovement : MonoBehaviour
     private float holdTimeSprint = 0f;
     private bool isSprinting = false;
     private bool canShoot = true; // Sets to false when player is hit or knocked out.
+    public Material standardForm; // Normal Form for Shadow.
+    public Material superForm; // Super Shadow!
+    private Renderer objectRender;
     private CharacterAnimationController animController;
     private WeaponSystem weaponController;
     private bool inAir;
@@ -56,7 +60,8 @@ public class PlayerMovement : MonoBehaviour
         inAir,
         powerUp,
         running,
-        shooting
+        shooting,
+        homingAttack
     }
     // Start is called before the first frame update
     private void Start()
@@ -71,15 +76,7 @@ public class PlayerMovement : MonoBehaviour
         // Start of Flying animation when transforming into Super Shadow.
         switch (currentStates)
         {
-            case States.idle:
-                break;
-            case States.shooting:
-                break;
-            case States.inAir:
-                break;
             case States.powerUp:
-                break;
-            case States.running:
                 break;
             case States.flying: 
                 break;
@@ -92,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
         // Ground check using raycast
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.1f);
         bool isForwardPress = Input.GetAxis("Vertical") > 0;
-        if (isForwardPress)
+        if (isForwardPress && !isFlying)
         {
             // Counts the timer
             holdTimeSprint += Time.deltaTime;
@@ -154,6 +151,10 @@ public class PlayerMovement : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.B))
         {
             StartCoroutine(FallDelay(5f));
+        }
+        if (isFlying)
+        {
+            FlyController();
         }
         #endregion
     }
@@ -230,6 +231,17 @@ public class PlayerMovement : MonoBehaviour
         body = GetComponent<Rigidbody>();
         animController = GetComponent<CharacterAnimationController>();
         weaponController = GetComponent<WeaponSystem>();
+        objectRender = GetComponent<Renderer>();
+    }
+    private void FlyController()
+    {
+        body.constraints = RigidbodyConstraints.FreezePositionY;
+        // animController.currentAnim = animController.currentAnim;
+        ChangeToSuperForm();
+    }
+    public void ChangeToSuperForm()
+    {
+        objectRender.material = superForm;
     }
     public void OnHit()
     {

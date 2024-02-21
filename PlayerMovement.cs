@@ -23,9 +23,12 @@ public class PlayerMovement : MonoBehaviour
     private float holdTimeSprint = 0f;
     private bool isSprinting = false;
     private bool canShoot = true; // Sets to false when player is hit or knocked out.
-    public Material standardForm; // Normal Form for Shadow.
-    public Material superForm; // Super Shadow!
-    private Renderer objectRender;
+    public Material standardForm1; // Normal Form for Shadow.
+    public Material standardForm2; // Same material object as standard form 1
+    public Material superForm1;
+    public Material superForm2;
+    public SkinnedMeshRenderer objectMaterialRender1;
+    public SkinnedMeshRenderer objectMaterialRender2;
     private CharacterAnimationController animController;
     private WeaponSystem weaponController;
     private bool inAir;
@@ -231,7 +234,6 @@ public class PlayerMovement : MonoBehaviour
         body = GetComponent<Rigidbody>();
         animController = GetComponent<CharacterAnimationController>();
         weaponController = GetComponent<WeaponSystem>();
-        objectRender = GetComponent<Renderer>();
     }
     private void FlyController()
     {
@@ -241,7 +243,9 @@ public class PlayerMovement : MonoBehaviour
     }
     public void ChangeToSuperForm()
     {
-        objectRender.material = superForm;
+        objectMaterialRender1.material = superForm1;
+        objectMaterialRender2.material = superForm2;
+        GameManager.instance.isInSuperForm = true;
     }
     public void OnHit()
     {

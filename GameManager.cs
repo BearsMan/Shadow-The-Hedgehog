@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     [Header("Gameplay")]
     public GameObject player;
     private Transform spawnLocation;
+    public bool isInSuperForm = false;
     // Stage scores and timers.
     private int normalScore;
     private int timer;
@@ -62,6 +63,10 @@ public class GameManager : MonoBehaviour
                     // If pausing the game, the timer will freeze until the user is ready to continue playing again.
                     // If the user decides to restart the level, the timer will start back from 00:00:00.
                     // When the user quits the stage to go back to the main menu, the timer will reset back to default, and the user will have to play the entire level again.
+        if (isInSuperForm)
+        {
+            SuperFormSettings();
+        }
     }
     public void PlayerDamage(float damage, Vector3 player)
     {
@@ -155,5 +160,13 @@ public class GameManager : MonoBehaviour
     {
         spawnLocation = location;
         rings += 10;
+    }
+    private void SuperFormSettings()
+    {
+        InvokeRepeating("RingDrain", Time.deltaTime, 3f); // This will toggle and repeat.
+    }
+    private void RingDrain()
+    {
+        rings -= 1; // Subtract per every 3 seconds.
     }
 }

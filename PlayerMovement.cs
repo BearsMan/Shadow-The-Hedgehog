@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private float holdTimeSprint = 0f;
     private bool isSprinting = false;
     private bool canShoot = true; // Sets to false when player is hit or knocked out.
+    private bool hasBeenDamaged = false;
     public Material standardForm1; // Normal Form for Shadow.
     public Material standardForm2; // Same material object as standard form 1
     public Material superForm1;
@@ -157,6 +158,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (isFlying)
         {
+            isFlying = false;
             FlyController();
         }
         #endregion
@@ -226,6 +228,7 @@ public class PlayerMovement : MonoBehaviour
         
         yield return new WaitForSeconds(seconds); // Re-use the delay at anytime.
         canShoot = true;
+        hasBeenDamaged = false;
         body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ; // This will auto-unfreeze the movement.
     }
     private void GetComponents()
@@ -245,17 +248,21 @@ public class PlayerMovement : MonoBehaviour
     {
         objectMaterialRender1.material = superForm1;
         objectMaterialRender2.material = superForm2;
-        GameManager.instance.isInSuperForm = true;
+        GameManager.instance.isInSuperForm = true; // When not playing the game scene, revert back to normal form.
     }
     public void OnHit()
     {
-        canShoot = false;
-        audioSource.PlayOneShot(ringLost);
-        GameManager.instance.PlayerDamage(10f, (transform.position));
-        animController.TakeDamageAnim();
-        // Debug.Log("Input Press"); // Select an input when the letter I is pressed.
-        body.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-        StartCoroutine(FallDelay(1.5f));
+        if (!hasBeenDamaged)
+        {
+            hasBeenDamaged = true;
+            canShoot = false;
+            audioSource.PlayOneShot(ringLost);
+            GameManager.instance.PlayerDamage(10f, (transform.position));
+            animController.TakeDamageAnim();
+            // Debug.Log("Input Press"); // Select an input when the letter I is pressed.
+            body.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            StartCoroutine(FallDelay(1.5f));
+        }
     }
     #endregion
 }

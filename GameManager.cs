@@ -94,6 +94,8 @@ public class GameManager : MonoBehaviour
             lightBar = 0f;
             // The character will spawn at the last given checkpoint.
         }
+        player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        player.GetComponent<CharacterAnimationController>().Death();
     }
     private void GameOver()
     {
@@ -138,6 +140,7 @@ public class GameManager : MonoBehaviour
         {
             OnDeath();
         }
+        ringUI.text = rings.ToString();
     }
     public void AmmoCounter(int count)
     {
@@ -151,6 +154,7 @@ public class GameManager : MonoBehaviour
     }
     private string FormatTime(float time)
     {
+        ringUI.text = rings.ToString();
         int minutes = Mathf.FloorToInt(time / 60f); // Shown in the UI.
         int seconds = Mathf.FloorToInt(time % 60); // Shown in the UI.
         int ms = Mathf.FloorToInt(time * 1000) % 100; // Shown in the UI. (using a remainder)
@@ -160,13 +164,18 @@ public class GameManager : MonoBehaviour
     {
         spawnLocation = location;
         rings += 10;
+        ringUI.text = rings.ToString();
     }
     private void SuperFormSettings()
     {
+        isInSuperForm = false;
+        rings = 50;
+        ringUI.text = rings.ToString();
         InvokeRepeating("RingDrain", Time.deltaTime, 3f); // This will toggle and repeat.
     }
     private void RingDrain()
     {
+        ringUI.text = rings.ToString();
         rings -= 1; // Subtract per every 3 seconds.
     }
 }

@@ -14,7 +14,7 @@ public class EnemyAI : MonoBehaviour
     private Transform player;
     private Animator animController;
     public float chaseRange = 10f;
-    public float attackCoolDown = 1f;
+    public float attackCoolDown = 2f;
     public float attackRadius = 1f;
     public Transform hands;
     public LayerMask playerLayer;

@@ -6,7 +6,7 @@ public class CharacterAnimationController : MonoBehaviour
 {
     #region
     // General Variables for player animations
-    private Animator anim;
+    public Animator currentAnim; // The current animation is played at the start of the gameplay.
     private Rigidbody body;
     private bool isFlying = false;
     public bool isShooting = false;
@@ -18,13 +18,16 @@ public class CharacterAnimationController : MonoBehaviour
     private PlayerMovement movement;
     public int blueMeterGaugePowerUp = 0;
     public int redMeterGaugePowerUp = 0;
+    public Animator flyingAnim;
+    public Animator groundAnim;
+    // private Animator currentAnim;
     #endregion
     // Start is called before the first frame update
     void Start()
     {
         // This is called at the start of the game function.
         #region
-        anim = GetComponent<Animator>();
+        currentAnim = GetComponent<Animator>();
         body = GetComponent<Rigidbody>();
         movement = GetComponent<PlayerMovement>();
     }
@@ -40,15 +43,15 @@ public class CharacterAnimationController : MonoBehaviour
         smoothSpeed = Mathf.Lerp(smoothSpeed, horizontalSpeed, Time.deltaTime * accelerationSpeed);
         {
             // Animations when playing the correct key.
-            anim.SetFloat("Speed", smoothSpeed);
-            // anim.SetBool("Flying", isFlying);
+            currentAnim.SetFloat("Speed", smoothSpeed);
+            // currentAnim.SetBool("Flying", isFlying);
             Input.GetKeyDown(KeyCode.Q);
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 SpecialAttack();
             }
-            anim.SetBool("Shooting", isShooting);
-            anim.SetBool("Punching", isPunching);
+            currentAnim.SetBool("Shooting", isShooting);
+            currentAnim.SetBool("Punching", isPunching);
         }
     }
     #endregion
@@ -60,25 +63,30 @@ public class CharacterAnimationController : MonoBehaviour
         if (blueMeterGaugePowerUp >= 100)
         {
             // Chaos Control or Chaos Spear Move
-            anim.SetBool("Flying", true);
+            currentAnim.SetBool("Flying", true);
         }
 
         else if (redMeterGaugePowerUp >= 100)
         {
             // Chaos Blast
-            anim.SetBool("Flying", false);
+            currentAnim.SetBool("Flying", false);
         }
     }
     public void TakeDamageAnim()
     {
         // The player's damage will play based on when it is being hit.
-        anim.SetTrigger("On Hit");
-        Debug.Log("Player is attacked"); // Current animation is bugged at this time.
-       // body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ; // Try and set a delay.
+        currentAnim.SetTrigger("On Hit");
+        // Debug.Log("Player is attacked"); // The current animation is bugged at this time.
+        // body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ; // Try and set a delay.
     }
     public void JumpAnim()
     {
-        anim.SetTrigger("Jump");
+        currentAnim.SetTrigger("Jump");
+    }
+    public void Death()
+    {
+        currentAnim.SetBool("Death", true);
+        currentAnim.enabled = false;
     }
     #endregion
 }

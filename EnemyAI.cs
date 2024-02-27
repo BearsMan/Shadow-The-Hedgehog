@@ -119,7 +119,7 @@ public class EnemyAI : MonoBehaviour
     private void Attack()
     {
         animController.SetTrigger("Punching");
-       // Debug.Log("Attack");
+        // Debug.Log("Attack");
         // Physics.OverlapSphere(hands.position, attackRadius, playerLayer);
         // Set a cooldown.
         Collider[] hitCollider = Physics.OverlapSphere(hands.position, attackRadius, playerLayer);

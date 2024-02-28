@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     public SkinnedMeshRenderer objectMaterialRender2;
     private CharacterAnimationController animController;
     private WeaponSystem weaponController;
+    public PickUpItem energyBlast;
     private bool inAir;
     private States currentStates;
     [Header("Audio")]
@@ -74,7 +75,9 @@ public class PlayerMovement : MonoBehaviour
         currentStates = States.idle;
     }
     private Animator anim;
+
     // Update is called once per frame
+    [System.Obsolete]
     private void Update()
     {
         // Start of Flying animation when transforming into Super Shadow.
@@ -238,16 +241,21 @@ public class PlayerMovement : MonoBehaviour
         animController = GetComponent<CharacterAnimationController>();
         weaponController = GetComponent<WeaponSystem>();
     }
+
+    [System.Obsolete]
     private void FlyController()
     {
         body.constraints = RigidbodyConstraints.FreezePositionY;
         // animController.currentAnim = animController.currentAnim;
         ChangeToSuperForm();
     }
+
+    [System.Obsolete]
     public void ChangeToSuperForm()
     {
         objectMaterialRender1.material = superForm1;
         objectMaterialRender2.material = superForm2;
+        weaponController.AddWeapons(energyBlast);
         GameManager.instance.isInSuperForm = true; // When not playing the game scene, revert back to normal form.
     }
     public void OnHit()

@@ -175,6 +175,11 @@ public class GameManager : MonoBehaviour
     }
     private void RingDrain()
     {
+        if (rings <= 0)
+        {
+            CancelInvoke();
+            OnDeath();
+        }
         ringUI.text = rings.ToString();
         rings -= 1; // Subtract per every 3 seconds.
     }

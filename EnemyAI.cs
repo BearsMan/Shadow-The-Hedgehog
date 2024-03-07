@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 public class EnemyAI : MonoBehaviour
 {
     [Header("Enemy Stats")]
     public float speed = 5f;
+    public int health = 100;
     private NavMeshAgent agent;
     private Transform target = null;
     public Transform pathway;
@@ -18,6 +20,10 @@ public class EnemyAI : MonoBehaviour
     public float attackRadius = 1f;
     public Transform hands;
     public LayerMask playerLayer;
+    public Slider healthBarSlider;
+    public GameObject enemyUIPrefab;
+    private GameObject enemyUI;
+    private bool enemyUIActive = false;
     public enum EnemyStates
     {
         idle, patrol, chase, attack
@@ -104,6 +110,11 @@ public class EnemyAI : MonoBehaviour
     // This is the start of the chase function.
     private void Chase()
     {
+        if (!enemyUIActive)
+        {
+           enemyUI = Instantiate(enemyUIPrefab);
+        }
+        Instantiate(gameObject, gameObject.transform);
         if (agent.remainingDistance < agent.stoppingDistance)
         {
             ChangeState(EnemyStates.attack);
@@ -157,6 +168,13 @@ public class EnemyAI : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(hands.position, attackRadius);
+    }
+    public void OnHit(int damage)
+    {
+        enemyUI.gameObject.GetComponentInChildren<Slider>().gameObject.SetActive(true);
+        enemyUI.gameObject.gameObject.SetActive(false);
+        health -= damage;
+        healthBarSlider.value = health;
     }
 }
     

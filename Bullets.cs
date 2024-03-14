@@ -7,6 +7,7 @@ public class Bullets : MonoBehaviour
     // Checks how much speed, and range the weapon has, and uses.
     public float speed = 10f;
     public float range = 5f;
+    public int damage = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,17 +23,20 @@ public class Bullets : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log (collision.gameObject.name);
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Weapons"))
         {
             
         }
-        else if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy"))
         {
             // Try to damage the enemy.
+            collision.gameObject.GetComponent<Health>().OnHit(damage);
+            Debug.Log("Collider did not get damaged.");
         }
         else
         {
-            Destroy (gameObject);
+            // Destroy (gameObject);
         }
     }
 }

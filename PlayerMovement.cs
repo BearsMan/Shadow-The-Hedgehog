@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     public float sprintThreshold = 3f;
     private float holdTimeSprint = 0f;
     private bool isSprinting = false;
-    private bool canShoot = true; // Sets to false when player is hit or knocked out.
+    private bool canShoot = true; // Sets to false when the main player is hit or knocked out.
     private bool hasBeenDamaged = false;
     public Material standardForm1; // Normal Form for Shadow.
     public Material standardForm2; // Same material object as standard form 1

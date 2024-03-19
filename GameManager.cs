@@ -59,10 +59,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HUDTimer(); // Updates the UI timer once per frame while the game is being played.
-                    // If pausing the game, the timer will freeze until the user is ready to continue playing again.
-                    // If the user decides to restart the level, the timer will start back from 00:00:00.
-                    // When the user quits the stage to go back to the main menu, the timer will reset back to default, and the user will have to play the entire level again.
+        HUDTimer(); /*Updates the UI timer once per frame while the game is being played.
+                    If pausing the game, the timer will freeze until the user is ready to continue playing again.
+                    If the user decides to restart the level, the timer will start back from 00:00:00.
+                    When the user quits the stage to go back to the main menu, the timer will reset back to default, and the user will have to play the entire level again.
+                    */
         if (isInSuperForm)
         {
             SuperFormSettings();
@@ -99,8 +100,10 @@ public class GameManager : MonoBehaviour
     }
     private void GameOver()
     {
-        // Ends the stage when the player dies, and you can select which option to do next.
-        // Which is either to continue from the last checkpoint, restart the level, or exit the game and go back to the main menu.
+        /*
+        Ends the stage when the player dies, and you can select which option to do next.
+        Which is either to continue from the last checkpoint, restart the level, or exit the game and go back to the main menu.
+        */
     }
     private void AddScore(int points)
     {

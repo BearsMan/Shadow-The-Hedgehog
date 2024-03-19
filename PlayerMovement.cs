@@ -36,12 +36,18 @@ public class PlayerMovement : MonoBehaviour
     private bool inAir;
     private States currentStates;
     [Header("Audio")]
-    // These audio files should only play whenever the red or blue bars for the attacks are filled, and it should never play in a loop.
-    // Plays Audio Source for Attacks
+    /*
+    These audio files should only play whenever the red or blue bars for the attacks are filled, and it should never play in a loop.
+    Plays Audio Source for Attacks
+    */
     public AudioClip chaosBlast;
-    // Plays Audio Clip for Chaos Blast when the red bar is filled, and will only fill when the player takes damage.
+    /*
+    Plays Audio Clip for Chaos Blast when the red bar is filled, and will only fill when the player takes damage.
+    */
     public AudioClip chaosControl;
-    // Plays audio clip for "Chaos Control" when the blue bar is filled, and will only fill when the enemies take damage.
+    /*
+     Plays audio clip for "Chaos Control" when the blue bar is filled, and will only fill when the enemies take damage.
+    */
     public AudioClip chaosSpear;
     // Plays Audio Clip for the Chaos Spear whenever the blue bar is filled, however, it is spilt into 2 audio clips.
     [Header("")]
@@ -91,7 +97,11 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             OnHit();
-            // Debug.Log("Spawn Rings"); // This is only used for debugging.
+            /*
+             Debug.Log("Spawn Rings"); 
+            */
+            /*This is only used for debugging.
+            */
         }
         // Ground check using raycast
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.1f);
@@ -267,7 +277,10 @@ public class PlayerMovement : MonoBehaviour
             audioSource.PlayOneShot(ringLost);
             GameManager.instance.PlayerDamage(10f, (transform.position));
             animController.TakeDamageAnim();
-            // Debug.Log("Input Press"); // Select an input when the letter I is pressed.
+            /*
+            Debug.Log("Input Press"); 
+            Select an input when the letter I is pressed.
+            */
             body.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             StartCoroutine(FallDelay(1.5f));
         }

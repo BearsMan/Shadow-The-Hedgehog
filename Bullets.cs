@@ -23,20 +23,10 @@ public class Bullets : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log (collision.gameObject.name);
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Weapons"))
+        if (collision.gameObject.GetComponent<Health>() != null)
         {
-            
-        }
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            // Try to damage the enemy.
             collision.gameObject.GetComponent<Health>().OnHit(damage);
-            Debug.Log("Collider did not get damaged.");
         }
-        else
-        {
-            // Destroy (gameObject);
-        }
+        // Debug.Log(collision.gameObject.name);
     }
 }

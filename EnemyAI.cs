@@ -29,7 +29,7 @@ public class EnemyAI : MonoBehaviour
         idle, patrol, chase, attack
     }
     // Start is called before the first frame update
-    public EnemyStates currentState;
+    public EnemyStates currentState = EnemyStates.idle;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -113,8 +113,8 @@ public class EnemyAI : MonoBehaviour
         if (!enemyUIActive)
         {
            enemyUI = Instantiate(enemyUIPrefab);
+           enemyUIActive = true;
         }
-        Instantiate(gameObject, gameObject.transform);
         if (agent.remainingDistance < agent.stoppingDistance)
         {
             ChangeState(EnemyStates.attack);
@@ -130,16 +130,16 @@ public class EnemyAI : MonoBehaviour
     private void Attack()
     {
         animController.SetTrigger("Punching");
-        // Debug.Log("Attack");
-        // Physics.OverlapSphere(hands.position, attackRadius, playerLayer);
+       
+        Physics.OverlapSphere(hands.position, attackRadius, playerLayer);
         // Set a cooldown.
         Collider[] hitCollider = Physics.OverlapSphere(hands.position, attackRadius, playerLayer);
-        // Debug.Log(hitCollider);
+        Debug.Log(hitCollider);
+        
         PlayerMovement pMovement = player.GetComponent<PlayerMovement>();
+        
         foreach (Collider shadow in hitCollider)
         {
-            // Debug.Log(collider);
-            // Debug.Log("HIT");
             pMovement.OnHit();
             // GameManager.instance.LoseRing(player.position);
         }
@@ -171,10 +171,14 @@ public class EnemyAI : MonoBehaviour
     }
     public void OnHit(int damage)
     {
+        /*
+        animController.SetTrigger("HitBox");
+        animController.SetBool("Death", true);
         enemyUI.gameObject.GetComponentInChildren<Slider>().gameObject.SetActive(true);
-        enemyUI.gameObject.gameObject.SetActive(false);
+        // enemyUI.gameObject.gameObject.SetActive(false);
         health -= damage;
         healthBarSlider.value = health;
+        */
     }
 }
     

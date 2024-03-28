@@ -25,9 +25,9 @@ public class PlayerMovement : MonoBehaviour
     private bool canShoot = true; // Sets to false when the main player is hit or knocked out.
     private bool hasBeenDamaged = false;
     public Material standardForm1; // Normal Form for Shadow.
-    public Material standardForm2; // Same material object as standard form 1
-    public Material superForm1;
-    public Material superForm2;
+    public Material standardForm2; // Same material object as standard form 1.
+    public Material superForm1; // Super Form for Shadow.
+    public Material superForm2; // Same material as super form 1.
     public SkinnedMeshRenderer objectMaterialRender1;
     public SkinnedMeshRenderer objectMaterialRender2;
     private CharacterAnimationController animController;

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
+    public GameObject UI;
     public int health = 100;
     public Slider healthSlider;
     public bool hasHealthSlider = true;
@@ -27,28 +28,25 @@ public class Health : MonoBehaviour
         {
             healthAnim.SetBool("Death", true);
             gameObject.GetComponent<EnemyAI>().enabled = false;
+            StartCoroutine(Delay());
         }
         healthAnim.SetTrigger("HitBox");
-        if (hasHealthSlider)
+        if (!hasHealthSlider)
         {
-            if (healthSlider == null)
-            {
-                healthSlider = Instantiate(healthSlider, transform);
-                // Debug.Log("Spawn health bar");
-            }
-            else
-            {
-                healthSlider.value = health;
-            }
-            /*
-            healthSlider.gameObject.GetComponentInChildren<Slider>().gameObject.SetActive(true);
-            healthSlider.gameObject.gameObject.SetActive(false);
-            healthSlider.enabled = true;
-            */
+            UI = Instantiate(UI);
+            healthSlider = UI.GetComponentInChildren<Slider>();
+            hasHealthSlider = true;
         }
+
+
         else
         {
-            healthSlider.enabled = false;
+            healthSlider.value = health;
         }
+    }
+    private IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(1);
+        Destroy (gameObject);
     }
 }

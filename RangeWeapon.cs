@@ -28,7 +28,8 @@ public class RangeWeapon : MonoBehaviour
     // Target for shooting a weapon with the amount of ammo used.
     public void ShootCurrentWeapon()
     {
-        Instantiate(projectilePrefab, barrel.position, barrel.rotation);
+        GameObject projectile = Instantiate(projectilePrefab, barrel.position, barrel.rotation);
+        projectile.transform.parent = null;
         if (gunSound && audioSource != null)
         {
             audioSource.PlayOneShot(gunSound);
@@ -41,7 +42,6 @@ public class RangeWeapon : MonoBehaviour
             {
                 // Check if the weapon is out of ammo.
                 Debug.Log("The player's weapon is out of ammo, please replace your weapon.");
-                
             }
         } 
     }

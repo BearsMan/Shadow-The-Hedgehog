@@ -15,8 +15,10 @@ public class WeaponSystem : MonoBehaviour
     public void Shoot()
     {
         weapons.ShootCurrentWeapon();
+        /*
         canAttack = false;
         Invoke("ResetAttackCoolDown", 1f);
+        */
     }
     // Adds weapons to characters
     public void AddWeapons(PickUpItem Weapons)
@@ -25,10 +27,8 @@ public class WeaponSystem : MonoBehaviour
         GameObject newWeapon = Instantiate(Weapons.weaponPrefab, weaponAnchor);
         currentWeapon = newWeapon;
         weapons = currentWeapon.GetComponent<RangeWeapon>();
-        Quaternion offSet = weapons.offSet;
-        // Quaternion offSet2 = Quaternion.Euler(offSet);
         currentWeapon.transform.localPosition = Vector3.zero;
-        currentWeapon.transform.localRotation = offSet;
+        currentWeapon.transform.localRotation = Quaternion.identity;
     }
     private void ResetAttackCoolDown()
     {

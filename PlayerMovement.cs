@@ -155,11 +155,11 @@ public class PlayerMovement : MonoBehaviour
         {
             NormalAttack();
         }
-        if (Input.GetKeyDown(KeyCode.B )&& canShoot)
+        if (Input.GetKeyDown(KeyCode.B)&& canShoot)
         {
             weaponController.Shoot();
             animController.isShooting = true;
-            if (!isGrounded)
+            if (!isGrounded && currentStates != States.flying)
             {
                 moveSpeed = 0f;
                 body.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
@@ -256,6 +256,7 @@ public class PlayerMovement : MonoBehaviour
     private void FlyController()
     {
         body.constraints = RigidbodyConstraints.FreezePositionY;
+        currentStates = States.flying;
         // animController.currentAnim = animController.currentAnim;
         ChangeToSuperForm();
     }
@@ -281,8 +282,11 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Input Press"); 
             Select an input when the letter I is pressed.
             */
-            body.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-            StartCoroutine(FallDelay(1.5f));
+            if (currentStates != States.flying)
+            {
+                body.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+                StartCoroutine(FallDelay(1.5f));
+            }
         }
     }
     #endregion

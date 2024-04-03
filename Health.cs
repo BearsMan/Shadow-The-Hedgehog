@@ -8,7 +8,7 @@ public class Health : MonoBehaviour
     public GameObject UI;
     public int health = 100;
     public Slider healthSlider;
-    public bool hasHealthSlider = true;
+    public bool hasHealthSlider = false;
     public Animator healthAnim;
     // Start is called before the first frame update
     void Start()
@@ -37,12 +37,9 @@ public class Health : MonoBehaviour
             healthSlider = UI.GetComponentInChildren<Slider>();
             hasHealthSlider = true;
         }
-
-
-        else
-        {
-            healthSlider.value = health;
-        }
+        
+        // healthSlider.value = health;
+        
     }
     private IEnumerator Delay()
     {

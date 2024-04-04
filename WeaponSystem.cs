@@ -10,11 +10,14 @@ public class WeaponSystem : MonoBehaviour
     private bool canAttack = true;
     private void Start()
     {
-        weapons = currentWeapon.GetComponent<RangeWeapon>();
+        // weapons = currentWeapon.GetComponent<RangeWeapon>();
     }
     public void Shoot()
     {
-        weapons.ShootCurrentWeapon();
+        if (currentWeapon != null)
+        {
+            weapons.ShootCurrentWeapon();
+        }
         /*
         canAttack = false;
         Invoke("ResetAttackCoolDown", 1f);
@@ -28,11 +31,10 @@ public class WeaponSystem : MonoBehaviour
         currentWeapon = newWeapon;
         weapons = currentWeapon.GetComponent<RangeWeapon>();
         currentWeapon.transform.localPosition = Vector3.zero;
-        currentWeapon.transform.localRotation = Quaternion.identity;
+        // currentWeapon.transform.localRotation = Quaternion.identity;
     }
     private void ResetAttackCoolDown()
     {
         canAttack = true;
-        
     }
 }

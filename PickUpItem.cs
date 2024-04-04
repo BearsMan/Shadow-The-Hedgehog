@@ -16,6 +16,10 @@ public class PickUpItem : MonoBehaviour
     {
         lightWeapon, heavyWeapon, meleeWeapon
     }
+    void Start()
+    {
+        player = GameObject.FindWithTag("Player");
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -32,11 +36,12 @@ public class PickUpItem : MonoBehaviour
     }
     private void Update()
     {
-        if (playerColliding = true && Input.GetKeyDown(KeyCode.E)) // If set to false, the weapon cannot not be picked up by the user.
-        // else if set to true, the weapon can be collected by the user.
+        if (playerColliding == true && Input.GetKeyDown(KeyCode.E)) // If this is set to false, the weapon cannot not be picked up by the user.
+        // else if this set to true, the weapon can be collected by the user.
         {
                 // Debug.Log("Press E to try to pick up the weapon");
                 PickUpItem weapon = GetComponent<PickUpItem>();
+                // Debug.Log("Try and pick up new weapon");
                 player.GetComponent<WeaponSystem>().AddWeapons(weapon);
                 Destroy (gameObject);
         }

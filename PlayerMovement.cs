@@ -162,7 +162,7 @@ public class PlayerMovement : MonoBehaviour
             if (!isGrounded && currentStates != States.flying)
             {
                 moveSpeed = 0f;
-                body.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+                body.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY;
             }
         }
         else if (Input.GetKeyUp(KeyCode.B))
@@ -242,7 +242,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(seconds); // Re-use the delay at anytime.
         canShoot = true;
         hasBeenDamaged = false;
-        body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ; // This will auto-unfreeze the movement.
+        body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY; // This will auto-unfreeze the movement.
     }
     private void GetComponents()
     {

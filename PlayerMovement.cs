@@ -67,12 +67,12 @@ public class PlayerMovement : MonoBehaviour
     private enum States
     {
         flying,
+        homingAttack,
         idle,
         inAir,
         powerUp,
         running,
-        shooting,
-        homingAttack
+        shooting
     }
     // Start is called before the first frame update
     private void Start()

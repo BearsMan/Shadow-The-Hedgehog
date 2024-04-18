@@ -75,11 +75,23 @@ public class GameManager : MonoBehaviour
         darkScore++;
         LoseRing(player);
         ringUI.text = rings.ToString();
+        darkBarSlider.value = darkBar; // Updates red bar when the enemies take damage.
+        if (darkBar >= 100)
+        {
+            // Gives shader to the player to glow and ability to use Chaos Blast!
+            GameObject.FindFirstObjectByType<UltimateAttacks>().SuperAttack(true);
+        }
     }
     public void EnemyDamage(float damage)
     {
         lightBar += damage; // When the enemies are damaged, the blue bar will increase the time ready to activate Chaos Control.
         heroScore++; // Scores are calculated when the enemies are killed in battle, either by a weapon or an object.
+        lightBarSlider.value = lightBar; // Updates blue bar when the player is damaged.
+        if (lightBar >= 100)
+        {
+            // Give shader to the player to glow and ability to use Chaos Control!
+            GameObject.FindFirstObjectByType<UltimateAttacks>().SuperAttack(false);
+        }   
     }
     private void OnDeath()
     {
@@ -114,7 +126,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < rings; i++)
         {
             Vector3 offSet = player + new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2f, 2f));
-           // Vector3 initialPosition = player;
+            // Vector3 initialPosition = player;
             float angle = 45f * Mathf.Deg2Rad;
             Vector3 initialVelocity = new Vector3(0 * Mathf.Cos(angle), 5f * Mathf.Sin(angle), 0);
             GameObject newRings = Instantiate(ringsPrefab, offSet, (Quaternion.identity));

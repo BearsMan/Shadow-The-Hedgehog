@@ -4,25 +4,29 @@ using UnityEngine;
 
 public class UltimateAttacks : MonoBehaviour
 {
-    private bool chaosBlastAttack = false;
-    private bool powerUpActive = true;
+    public bool chaosBlastAttack = true;
+    public bool powerUpActive = true;
+    public List<AudioClip> chaosBlastSounds;
+    private AudioSource chaosBlastSoundsSource;
     public GameObject chaosBlastSphereForm;
     // Start is called before the first frame update
     void Start()
     {
-        
+        chaosBlastSoundsSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (powerUpActive && Input.GetButtonDown("Power Up"))
+        if (powerUpActive && Input.GetKeyDown(KeyCode.M))
         {
             // To use either Chaos Control or Chaos Blast, depending on the color of the bar being hit by the most.
             if (chaosBlastAttack)
             {
                 // Chaos Blast is being used.
-                Instantiate(chaosBlastSphereForm);
+                GameObject blast = Instantiate(chaosBlastSphereForm, transform);
+                blast.transform.parent = null;
+                chaosBlastSoundsSource.PlayOneShot(chaosBlastSounds[0]); // This is an array.
             }
             else
             {

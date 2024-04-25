@@ -22,9 +22,11 @@ public class ChaosBlast : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        // Debug.Log(other.gameObject.name);
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Destroy (other.gameObject);
+            // Debug.Log("Hit Enemy");
+            other.GetComponent<Health>().OnHit(1000);
         }
     }
     private IEnumerator ExpandsOverTime()

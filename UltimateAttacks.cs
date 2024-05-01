@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class UltimateAttacks : MonoBehaviour
 {
-    public bool chaosBlastAttack = true;
+    public bool chaosBlastAttack = true; // Check has to be manually set.
     public bool powerUpActive = true;
     public List<AudioClip> chaosBlastSounds;
     private AudioSource chaosBlastSoundsSource;
     public GameObject chaosBlastSphereForm;
+    public SkinnedMeshRenderer locationofSkin1;
+    public SkinnedMeshRenderer locationOfSkin2;
+    public Material normalSkin;
+    public Material ultimateSkin;
+    private bool changeSkin = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,24 +23,37 @@ public class UltimateAttacks : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (powerUpActive && Input.GetKeyDown(KeyCode.M))
+        if (powerUpActive)
         {
-            // To use either Chaos Control or Chaos Blast, depending on the color of the bar being hit by the most.
-            if (chaosBlastAttack)
+            if (!changeSkin)
             {
-                // Chaos Blast is being used.
-                GameObject blast = Instantiate(chaosBlastSphereForm, transform);
-                blast.transform.parent = null;
-                chaosBlastSoundsSource.PlayOneShot(chaosBlastSounds[0]); // This is an array.
+                changeSkin = true;
+                locationofSkin1.material = ultimateSkin;
+                locationOfSkin2.material = ultimateSkin;
             }
-            else
+            if (Input.GetKeyDown(KeyCode.M))
             {
-                // Chaos Control is being used instead.
+                // To use either Chaos Control or Chaos Blast, depending on the color of the bar being hit by the most.
+                if (chaosBlastAttack)
+                {
+                    // Chaos Blast is being used.
+                    GameObject blast = Instantiate(chaosBlastSphereForm, transform);
+                    blast.transform.parent = null;
+                    chaosBlastSoundsSource.PlayOneShot(chaosBlastSounds[0]); // This is an array.
+                }
+                else
+                {
+                    // Chaos Control is being used instead.
+                }
+                    
+                powerUpActive = false;
+                changeSkin = false; // Changes the skin for the aura attacks.
+                locationofSkin1.material = normalSkin;
+                locationOfSkin2.material = normalSkin;
+                GameManager.instance.ClearAttackBars(); // This clears the attack call phases for light and dark attacks.
+                // Set to true when timer for power up is active.
+
             }
-            /*
-            powerUpActive = false; 
-            Set to true when timer for power up is active.
-            */
         }
     }
     // Setup Ultimate Attacks for Shadow

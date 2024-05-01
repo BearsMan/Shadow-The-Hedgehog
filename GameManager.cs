@@ -198,4 +198,11 @@ public class GameManager : MonoBehaviour
         ringUI.text = rings.ToString();
         rings -= 1; // Subtract per every 3 seconds.
     }
+    public void ClearAttackBars()
+    {
+        darkBar = 0;
+        lightBar = 0;
+        darkBarSlider.value = darkBar;
+        lightBarSlider.value = lightBar;
+    }
 }

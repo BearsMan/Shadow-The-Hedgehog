@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText; // This is used to show the scores for each stage that you completed.
     public TextMeshProUGUI timerUI; // Shows the timer from the UI and the times will be added together based on the scores of the HeroScore, DarkScore, NormalScore, etc.
     public TextMeshProUGUI ringUI; // Shows the number of rings that the player currently has.
+    public Material darkBarMaterial;
+    public Material lightBarMaterial;
 
     [Header("Gameplay")]
     public GameObject player;
@@ -80,6 +82,7 @@ public class GameManager : MonoBehaviour
         {
             // Gives shader to the player to glow and ability to use Chaos Blast!
             GameObject.FindFirstObjectByType<UltimateAttacks>().SuperAttack(true);
+            darkBarSlider.transform.Find("Red Color Fill").GetComponentInChildren<Image>().material = darkBarMaterial;
         }
     }
     public void EnemyDamage(float damage)
@@ -91,6 +94,7 @@ public class GameManager : MonoBehaviour
         {
             // Give shader to the player to glow and ability to use Chaos Control!
             GameObject.FindFirstObjectByType<UltimateAttacks>().SuperAttack(false);
+            lightBarSlider.transform.Find("Blue Color Fill").GetComponentInChildren<Image>().material = lightBarMaterial;
         }   
     }
     private void OnDeath()
@@ -204,5 +208,7 @@ public class GameManager : MonoBehaviour
         lightBar = 0;
         darkBarSlider.value = darkBar;
         lightBarSlider.value = lightBar;
+        darkBarSlider.transform.Find("Red Color Fill").GetComponentInChildren<Image>().material = null; // Null means to return none.
+        lightBarSlider.transform.Find("Blue Color Fill").GetComponentInChildren<Image>().material = null; // Null returns none, similar to void.
     }
 }

@@ -46,12 +46,11 @@ public class UltimateAttacks : MonoBehaviour
                     // Chaos Control is being used instead.
                 }
                     
-                powerUpActive = false;
+                powerUpActive = false; // Set to true when timer for power up is active.
                 changeSkin = false; // Changes the skin for the aura attacks.
                 locationofSkin1.material = normalSkin;
                 locationOfSkin2.material = normalSkin;
                 GameManager.instance.ClearAttackBars(); // This clears the attack call phases for light and dark attacks.
-                // Set to true when timer for power up is active.
 
             }
         }

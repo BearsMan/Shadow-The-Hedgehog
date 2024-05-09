@@ -14,10 +14,19 @@ public class UltimateAttacks : MonoBehaviour
     public Material normalSkin;
     public Material ultimateSkin;
     private bool changeSkin = false;
+    public GameObject checkPoints;
+    public Transform[] targetPosition;
+    public float chaosControlSpeed = 2.0f;
+    public float arrivalThreshold = 0.1f;
+    private int currentTargetIndex = 0;
     // Start is called before the first frame update
     void Start()
     {
         chaosBlastSoundsSource = GetComponent<AudioSource>();
+        for (int i = 0; i < checkPoints.transform.childCount; i++)
+        {
+            targetPosition[i] = checkPoints.transform.GetChild(i).transform; // This is filled with child objects.
+        }
     }
 
     // Update is called once per frame
@@ -44,6 +53,7 @@ public class UltimateAttacks : MonoBehaviour
                 else
                 {
                     // Chaos Control is being used instead.
+                    StartCoroutine(FlyToNextPosition());
                 }
                     
                 powerUpActive = false; // Set to true when timer for power up is active.
@@ -66,6 +76,24 @@ public class UltimateAttacks : MonoBehaviour
         else
         {
             // Use Chaos Control when the blue bar is filled, depending on how the player reacts.
+        }
+    }
+    IEnumerator FlyToNextPosition()
+    {
+        while (currentTargetIndex > targetPosition.Length)
+        {
+            Vector3 flyPosition = targetPosition[currentTargetIndex].position;
+
+            while (Vector3.Distance(transform.position, flyPosition) > arrivalThreshold)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, flyPosition, chaosControlSpeed * Time.deltaTime);
+                yield return null; // returns none.
+            }
+        }
+        currentTargetIndex++; // Move to the next position.
+        if (currentTargetIndex < targetPosition.Length)
+        {
+            yield return new WaitForSeconds(1f); // Timer to wait for the next jump to the next checkpoint.
         }
     }
 }

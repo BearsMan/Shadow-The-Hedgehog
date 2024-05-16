@@ -9,7 +9,7 @@ public class UltimateAttacks : MonoBehaviour
     public List<AudioClip> chaosBlastSounds;
     private AudioSource chaosBlastSoundsSource;
     public GameObject chaosBlastSphereForm;
-    public SkinnedMeshRenderer locationofSkin1;
+    public SkinnedMeshRenderer locationOfSkin1;
     public SkinnedMeshRenderer locationOfSkin2;
     public Material normalSkin;
     public Material ultimateSkin;
@@ -40,7 +40,7 @@ public class UltimateAttacks : MonoBehaviour
             if (!changeSkin)
             {
                 changeSkin = true;
-                locationofSkin1.material = ultimateSkin;
+                locationOfSkin1.material = ultimateSkin;
                 locationOfSkin2.material = ultimateSkin;
             }
             if (Input.GetKeyDown(KeyCode.M))
@@ -62,7 +62,7 @@ public class UltimateAttacks : MonoBehaviour
                     
                 powerUpActive = false; // Set to true when timer for power up is active.
                 changeSkin = false; // Changes the skin for the aura attacks.
-                locationofSkin1.material = normalSkin;
+                locationOfSkin1.material = normalSkin;
                 locationOfSkin2.material = normalSkin;
                 GameManager.instance.ClearAttackBars(); // This clears the attack call phases for light and dark attacks.
 

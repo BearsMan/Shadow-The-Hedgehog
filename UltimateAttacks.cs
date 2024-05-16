@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class UltimateAttacks : MonoBehaviour
 {
-    public bool chaosBlastAttack = true; // Check has to be manually set.
+    public bool chaosBlastAttack = true;
+    private bool chaosControlActive = false;
     public bool powerUpActive = true;
+    public AudioClip chaosControlSound;
     public List<AudioClip> chaosBlastSounds;
-    private AudioSource chaosBlastSoundsSource;
+    private AudioSource SoundsSource;
     public GameObject chaosBlastSphereForm;
     public SkinnedMeshRenderer locationOfSkin1;
     public SkinnedMeshRenderer locationOfSkin2;
     public Material normalSkin;
-    public Material ultimateSkin;
+    public Material ultimateEvilSkin;
+    public Material ultimateGoodSkin;
     private bool changeSkin = false;
     public GameObject checkPoints;
     public Transform[] targetPosition;
@@ -22,7 +25,7 @@ public class UltimateAttacks : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        chaosBlastSoundsSource = GetComponent<AudioSource>();
+         SoundsSource = GetComponent<AudioSource>();
         /*
         for (int i = 0; i < checkPoints.transform.childCount; i++)
         {
@@ -37,36 +40,47 @@ public class UltimateAttacks : MonoBehaviour
     {
         if (powerUpActive)
         {
-            if (!changeSkin)
+
+            if (chaosBlastAttack)
             {
-                changeSkin = true;
-                locationOfSkin1.material = ultimateSkin;
-                locationOfSkin2.material = ultimateSkin;
-            }
-            if (Input.GetKeyDown(KeyCode.M))
-            {
+                if (!changeSkin)
+                {
+                    changeSkin = true;
+                    locationOfSkin1.material = ultimateEvilSkin;
+                    locationOfSkin2.material = ultimateEvilSkin;
+                }
                 // To use either Chaos Control or Chaos Blast, depending on the color of the bar being hit by the most.
-                if (chaosBlastAttack)
+                if (Input.GetKeyDown(KeyCode.M))
                 {
                     // Chaos Blast is being used.
                     GameObject blast = Instantiate(chaosBlastSphereForm, transform);
                     blast.transform.parent = null;
-                    chaosBlastSoundsSource.PlayOneShot(chaosBlastSounds[0]); // This is an array.
+                    SoundsSource.PlayOneShot(chaosBlastSounds[0]); // This is an array.
+                    EndOfUltimate();
+                    changeSkin = false;
                 }
-                else
-                {
-                    // Chaos Control is being used instead.
-                    // StartCoroutine(FlyToNextPosition());
-                    // Debug.Log("Chaos Control!");
-                }
-                    
-                powerUpActive = false; // Set to true when timer for power up is active.
-                changeSkin = false; // Changes the skin for the aura attacks.
-                locationOfSkin1.material = normalSkin;
-                locationOfSkin2.material = normalSkin;
-                GameManager.instance.ClearAttackBars(); // This clears the attack call phases for light and dark attacks.
 
             }
+            else
+            {
+                if (!changeSkin)
+                {
+                    changeSkin = true;
+                    locationOfSkin1.material = ultimateGoodSkin;
+                    locationOfSkin2.material = ultimateGoodSkin;
+                }
+                if (Input.GetKeyDown(KeyCode.M))
+                {
+                    SoundsSource.PlayOneShot(chaosControlSound);
+                    EndOfUltimate();
+                    changeSkin = false;
+                    chaosControlActive = true;
+                }
+            }
+        }
+        if (chaosControlActive)
+        {
+            FlyToNextPosition();
         }
     }
     // Setup Ultimate Attacks for Shadow
@@ -82,28 +96,41 @@ public class UltimateAttacks : MonoBehaviour
             // Use Chaos Control when the blue bar is filled, depending on how the player reacts.
         }
     }
-    /*
-    private IEnumerator FlyToNextPosition()
+    
+    private void FlyToNextPosition()
     {
         
-        Debug.Log("Fly");
-        while (currentTargetIndex > targetPosition.Length)
+        // Debug.Log("Fly");
+        if (currentTargetIndex > targetPosition.Length)
         {
-            Vector3 flyPosition = targetPosition[currentTargetIndex].position;
+            Vector3 flyPosition = targetPosition[0].position;
             // Debug.Log(flyPosition);
+            Debug.Log(currentTargetIndex);
 
-            while (Vector3.Distance(transform.position, flyPosition) > arrivalThreshold)
+            if (Vector3.Distance(transform.position, flyPosition) > arrivalThreshold)
             {
                 transform.position = Vector3.MoveTowards(transform.position, flyPosition, chaosControlSpeed * Time.deltaTime);
                 // Debug.Log("Current Target Index");
-                yield return null; // returns none.
+                // yield return null; // returns none.
+            }
+            else
+            {
+                currentTargetIndex++; // Move to the next position.
             }
         }
-        currentTargetIndex++; // Move to the next position.
         if (currentTargetIndex < targetPosition.Length)
         {
-            yield return new WaitForSeconds(1f); // Timer to wait for the next jump to the next checkpoint.
+            // yield return new WaitForSeconds(1f); // Timer to wait for the next jump to the next checkpoint.
         }
     }
-    */
+    
+
+    private void EndOfUltimate()
+    {
+        powerUpActive = false;
+        changeSkin = false; // Changes the skin for the aura attacks.
+        locationOfSkin1.material = normalSkin;
+        locationOfSkin2.material = normalSkin;
+        GameManager.instance.ClearAttackBars(); // This clears the attack call phases for light and dark attacks.
+    }
 }

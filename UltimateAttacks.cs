@@ -23,10 +23,13 @@ public class UltimateAttacks : MonoBehaviour
     void Start()
     {
         chaosBlastSoundsSource = GetComponent<AudioSource>();
+        /*
         for (int i = 0; i < checkPoints.transform.childCount; i++)
         {
-            targetPosition[i] = checkPoints.transform.GetChild(i).transform; // This is filled with child objects.
+            Transform childTransform = checkPoints.transform.GetChild(i).transform; // This is filled with child objects.
+            targetPosition[i] = childTransform;
         }
+        */
     }
 
     // Update is called once per frame
@@ -53,7 +56,8 @@ public class UltimateAttacks : MonoBehaviour
                 else
                 {
                     // Chaos Control is being used instead.
-                    StartCoroutine(FlyToNextPosition());
+                    // StartCoroutine(FlyToNextPosition());
+                    // Debug.Log("Chaos Control!");
                 }
                     
                 powerUpActive = false; // Set to true when timer for power up is active.
@@ -78,15 +82,20 @@ public class UltimateAttacks : MonoBehaviour
             // Use Chaos Control when the blue bar is filled, depending on how the player reacts.
         }
     }
-    IEnumerator FlyToNextPosition()
+    /*
+    private IEnumerator FlyToNextPosition()
     {
+        
+        Debug.Log("Fly");
         while (currentTargetIndex > targetPosition.Length)
         {
             Vector3 flyPosition = targetPosition[currentTargetIndex].position;
+            // Debug.Log(flyPosition);
 
             while (Vector3.Distance(transform.position, flyPosition) > arrivalThreshold)
             {
                 transform.position = Vector3.MoveTowards(transform.position, flyPosition, chaosControlSpeed * Time.deltaTime);
+                // Debug.Log("Current Target Index");
                 yield return null; // returns none.
             }
         }
@@ -96,4 +105,5 @@ public class UltimateAttacks : MonoBehaviour
             yield return new WaitForSeconds(1f); // Timer to wait for the next jump to the next checkpoint.
         }
     }
+    */
 }

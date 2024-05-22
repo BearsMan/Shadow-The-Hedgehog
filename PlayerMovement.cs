@@ -31,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     public SkinnedMeshRenderer objectMaterialRender1;
     public SkinnedMeshRenderer objectMaterialRender2;
     private CharacterAnimationController animController;
+    private Animator characterAnimator;
     private WeaponSystem weaponController;
     public PickUpItem energyBlast;
     private bool inAir;
@@ -91,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
         {
             case States.powerUp:
                 break;
-            case States.flying: 
+            case States.flying:
                 break;
         }
         if (Input.GetKeyDown(KeyCode.I))
@@ -133,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
         float moveInputHorizontal = Input.GetAxis("Horizontal");
         float moveInputVertical = Input.GetAxis("Vertical");
         Vector3 moveDirection = (cameraForward * moveInputVertical + cameraRight * moveInputHorizontal).normalized;
-        
+
         body.velocity = new Vector3(moveDirection.x * moveSpeed, body.velocity.y, moveDirection.z * moveSpeed);
 
         // Look at movement direction
@@ -155,7 +156,7 @@ public class PlayerMovement : MonoBehaviour
         {
             NormalAttack();
         }
-        if (Input.GetKeyDown(KeyCode.B)&& canShoot)
+        if (Input.GetKeyDown(KeyCode.B) && canShoot)
         {
             weaponController.Shoot();
             animController.isShooting = true;
@@ -168,6 +169,15 @@ public class PlayerMovement : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.B))
         {
             StartCoroutine(FallDelay(5f));
+        }
+        if (isGrounded)
+        {
+            isJumping = false;
+            anim.SetBool("Aerial Attack", false);
+        }
+        if (Input.GetKeyDown(KeyCode.Space)&& !isGrounded)
+        {
+            HomingAttack(FindNearestEnemy());
         }
         if (isFlying)
         {
@@ -193,15 +203,11 @@ public class PlayerMovement : MonoBehaviour
     // Create Homing Attack Controls
     public void HomingAttack(Transform nearestEnemy)
     {
-          if (!isGrounded)
+        if (!isJumping)
         {
-            transform.position = Vector3.Lerp(transform.position, nearestEnemy.position, 2f);
-
-            // Check if character is jumping with the corresponding key.
-            if (isJumping)
-            {
-                Input.GetKeyDown(KeyCode.A);
-            }
+            isJumping = true;
+            transform.position = Vector3.Lerp(transform.position, nearestEnemy.position, 5f);
+            characterAnimator.SetBool("Aerial Attack", true);
         }
     }
     // Find the nearest enemy closest to the player.
@@ -251,6 +257,7 @@ public class PlayerMovement : MonoBehaviour
         body = GetComponent<Rigidbody>();
         animController = GetComponent<CharacterAnimationController>();
         weaponController = GetComponent<WeaponSystem>();
+        characterAnimator = GetComponent<Animator>();
     }
 
     [System.Obsolete]

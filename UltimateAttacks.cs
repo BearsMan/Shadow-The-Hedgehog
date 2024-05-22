@@ -111,7 +111,6 @@ public class UltimateAttacks : MonoBehaviour
             {
                 transform.position = Vector3.MoveTowards(transform.position, flyPosition, chaosControlSpeed * Time.deltaTime);
                 // Debug.Log("Current Target Index");
-                // yield return null; // returns none.
             }
             else
             {
@@ -120,7 +119,7 @@ public class UltimateAttacks : MonoBehaviour
         }
         if (currentTargetIndex < targetPosition.Length)
         {
-            // yield return new WaitForSeconds(1f); // Timer to wait for the next jump to the next checkpoint.
+            
         }
     }
     

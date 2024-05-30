@@ -31,7 +31,8 @@ public class HomingAttack : MonoBehaviour
     {
         {
             aerialAttackActive = true;
-            transform.position = Vector3.Lerp(transform.position, nearestEnemy.position, 5f);
+            Vector3 targetPosition = transform.position;
+            transform.position = Vector3.Lerp(targetPosition, nearestEnemy.position, 20f * Time.deltaTime);
             animController.SetAerialAttack(true);
         }
     }

@@ -22,12 +22,12 @@ public class PlayerMovement : MonoBehaviour
     public float sprintThreshold = 3f;
     private float holdTimeSprint = 0f;
     private bool isSprinting = false;
-    private bool canShoot = true; // Sets to false when the main player is hit or knocked out.
     private bool hasBeenDamaged = false;
-    public Material standardForm1; // Normal Form for Shadow.
-    public Material standardForm2; // Same material object as standard form 1.
-    public Material superForm1; // Super Form for Shadow.
-    public Material superForm2; // Same material as super form 1.
+    private bool aerialAttackActive = false;
+    public Material standardForm1; 
+    public Material standardForm2;
+    public Material superForm1;
+    public Material superForm2;
     public SkinnedMeshRenderer objectMaterialRender1;
     public SkinnedMeshRenderer objectMaterialRender2;
     private CharacterAnimationController animController;
@@ -156,29 +156,7 @@ public class PlayerMovement : MonoBehaviour
         {
             NormalAttack();
         }
-        if (Input.GetKeyDown(KeyCode.B) && canShoot)
-        {
-            weaponController.Shoot();
-            animController.isShooting = true;
-            if (!isGrounded && currentStates != States.flying)
-            {
-                moveSpeed = 0f;
-                body.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY;
-            }
-        }
-        else if (Input.GetKeyUp(KeyCode.B))
-        {
-            StartCoroutine(FallDelay(5f));
-        }
-        if (isGrounded)
-        {
-            isJumping = false;
-            anim.SetBool("Aerial Attack", false);
-        }
-        if (Input.GetKeyDown(KeyCode.Space)&& !isGrounded)
-        {
-            HomingAttack(FindNearestEnemy());
-        }
+        
         if (isFlying)
         {
             isFlying = false;
@@ -200,37 +178,6 @@ public class PlayerMovement : MonoBehaviour
         Invoke(nameof(ResetAttackCoolDown), attackCoolDown);
     }
 
-    // Create Homing Attack Controls
-    public void HomingAttack(Transform nearestEnemy)
-    {
-        if (!isJumping)
-        {
-            isJumping = true;
-            transform.position = Vector3.Lerp(transform.position, nearestEnemy.position, 5f);
-            characterAnimator.SetBool("Aerial Attack", true);
-        }
-    }
-    // Find the nearest enemy closest to the player.
-    public Transform FindNearestEnemy()
-    {
-        GameObject[] listEnemies = GameObject.FindGameObjectsWithTag("Enemy");
-        if (listEnemies.Length == 0)
-        {
-            return null;
-        }
-        Transform nearestEnemy = null;
-        float shortestDistance = Mathf.Infinity;
-        foreach (GameObject Enemy in listEnemies)
-        {
-            float distance = Vector3.Distance(transform.position, Enemy.transform.position);
-            if (distance < shortestDistance)
-            {
-                shortestDistance = distance;
-                nearestEnemy = Enemy.transform;
-            }
-        }
-        return nearestEnemy;
-    }
     // Function for Resets on Animation Cooldowns.
     private void ResetAttackCoolDown()
     {
@@ -242,22 +189,12 @@ public class PlayerMovement : MonoBehaviour
     {
         // Plays the correct sound effect based on the stage played, and the attack patterns being called.
     }
-
-    private IEnumerator FallDelay(float seconds)
-    {
-        
-        yield return new WaitForSeconds(seconds); // Re-use the delay at anytime.
-        canShoot = true;
-        hasBeenDamaged = false;
-        body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY; // This will auto-unfreeze the movement.
-    }
     private void GetComponents()
     {
         audioSource = GetComponent<AudioSource>();
         body = GetComponent<Rigidbody>();
         animController = GetComponent<CharacterAnimationController>();
         weaponController = GetComponent<WeaponSystem>();
-        characterAnimator = GetComponent<Animator>();
     }
 
     [System.Obsolete]
@@ -279,21 +216,18 @@ public class PlayerMovement : MonoBehaviour
     }
     public void OnHit()
     {
-        if (!hasBeenDamaged)
+        if (!hasBeenDamaged && !aerialAttackActive)
         {
             hasBeenDamaged = true;
-            canShoot = false;
+            weaponController.enabled = false;
             audioSource.PlayOneShot(ringLost);
             GameManager.instance.PlayerDamage(10f, (transform.position));
             animController.TakeDamageAnim();
-            /*
-            Debug.Log("Input Press"); 
-            Select an input when the letter I is pressed.
-            */
+            // Wait until the animation is fully completed.
+            weaponController.enabled = true;
             if (currentStates != States.flying)
             {
                 body.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-                StartCoroutine(FallDelay(1.5f));
             }
         }
     }

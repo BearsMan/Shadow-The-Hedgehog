@@ -19,20 +19,28 @@ public class HomingAttack : MonoBehaviour
         bool isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.1f);
         if (Input.GetKeyDown(KeyCode.Space) && !isGrounded && !aerialAttackActive)
         {
-            OnHomingAttack(FindNearestEnemy());
+            aerialAttackActive = true;
         }
         if (isGrounded)
         {
             aerialAttackActive = false;
+        }
+        if (aerialAttackActive)
+        {
+            OnHomingAttack(FindNearestEnemy());
         }
     }
     // Create Homing Attack Controls
     public void OnHomingAttack(Transform nearestEnemy)
     {
         {
-            aerialAttackActive = true;
-            Vector3 targetPosition = transform.position;
-            transform.position = Vector3.Lerp(targetPosition, nearestEnemy.position, 20f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, nearestEnemy.position, nullAttackForce * Time.deltaTime);
+            if (Vector3.Distance(transform.position, nearestEnemy.position) < 0.01f)
+            {
+                transform.position = nearestEnemy.position;
+                aerialAttackActive = false;
+            }
+            // transform.position = Vector3.Lerp(targetPosition, nearestEnemy.position, 20f * Time.deltaTime);
             animController.SetAerialAttack(true);
         }
     }

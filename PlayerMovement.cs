@@ -24,18 +24,12 @@ public class PlayerMovement : MonoBehaviour
     private bool isSprinting = false;
     private bool hasBeenDamaged = false;
     private bool aerialAttackActive = false;
-    public Material standardForm1; 
-    public Material standardForm2;
-    public Material superForm1;
-    public Material superForm2;
     public SkinnedMeshRenderer objectMaterialRender1;
     public SkinnedMeshRenderer objectMaterialRender2;
     private CharacterAnimationController animController;
     private Animator characterAnimator;
     private WeaponSystem weaponController;
-    public PickUpItem energyBlast;
     private bool inAir;
-    private States currentStates;
     [Header("Audio")]
     /*
     These audio files should only play whenever the red or blue bars for the attacks are filled, and it should never play in a loop.
@@ -65,21 +59,10 @@ public class PlayerMovement : MonoBehaviour
     // Ends audio source play after using the correct attacks based on the color on the bar that is being filled.
     #endregion
 
-    private enum States
-    {
-        flying,
-        homingAttack,
-        idle,
-        inAir,
-        powerUp,
-        running,
-        shooting
-    }
     // Start is called before the first frame update
     private void Start()
     {
         GetComponents();
-        currentStates = States.idle;
     }
     private Animator anim;
 
@@ -87,14 +70,6 @@ public class PlayerMovement : MonoBehaviour
     [System.Obsolete]
     private void Update()
     {
-        // Start of Flying animation when transforming into Super Shadow.
-        switch (currentStates)
-        {
-            case States.powerUp:
-                break;
-            case States.flying:
-                break;
-        }
         if (Input.GetKeyDown(KeyCode.I))
         {
             OnHit();
@@ -156,12 +131,6 @@ public class PlayerMovement : MonoBehaviour
         {
             NormalAttack();
         }
-        
-        if (isFlying)
-        {
-            isFlying = false;
-            FlyController();
-        }
         #endregion
     }
     #region
@@ -198,22 +167,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
     [System.Obsolete]
-    private void FlyController()
-    {
-        body.constraints = RigidbodyConstraints.FreezePositionY;
-        currentStates = States.flying;
-        // animController.currentAnim = animController.currentAnim;
-        ChangeToSuperForm();
-    }
-
-    [System.Obsolete]
-    public void ChangeToSuperForm()
-    {
-        objectMaterialRender1.material = superForm1;
-        objectMaterialRender2.material = superForm2;
-        weaponController.AddWeapons(energyBlast);
-        GameManager.instance.isInSuperForm = true; // When not playing the game scene, revert back to normal form.
-    }
     public void OnHit()
     {
         if (!hasBeenDamaged && !aerialAttackActive)
@@ -225,10 +178,9 @@ public class PlayerMovement : MonoBehaviour
             animController.TakeDamageAnim();
             // Wait until the animation is fully completed.
             weaponController.enabled = true;
-            if (currentStates != States.flying)
-            {
-                body.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-            }
+             
+            body.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            
         }
     }
     #endregion

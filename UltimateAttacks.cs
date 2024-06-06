@@ -104,8 +104,11 @@ public class UltimateAttacks : MonoBehaviour
         if (currentTargetIndex > targetPosition.Length)
         {
             Vector3 flyPosition = targetPosition[0].position;
-            // Debug.Log(flyPosition);
-            // Debug.Log(currentTargetIndex);
+            /*
+            Debug.Log(flyPosition);
+            Debug.Log(currentTargetIndex);
+            */
+            
 
             if (Vector3.Distance(transform.position, flyPosition) > arrivalThreshold)
             {

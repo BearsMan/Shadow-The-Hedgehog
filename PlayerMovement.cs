@@ -110,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
         float moveInputVertical = Input.GetAxis("Vertical");
         Vector3 moveDirection = (cameraForward * moveInputVertical + cameraRight * moveInputHorizontal).normalized;
 
-        body.velocity = new Vector3(moveDirection.x * moveSpeed, body.velocity.y, moveDirection.z * moveSpeed);
+        body.linearVelocity = new Vector3(moveDirection.x * moveSpeed, body.velocity.y, moveDirection.z * moveSpeed);
 
         // Look at movement direction
         if (moveDirection != Vector3.zero)

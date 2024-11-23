@@ -72,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            OnHit();
+            GetHit();
             /*
              Debug.Log("Spawn Rings"); 
             */
@@ -167,7 +167,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     [System.Obsolete]
-    public void OnHit()
+    public void GetHit()
     {
         if (!hasBeenDamaged && !aerialAttackActive)
         {

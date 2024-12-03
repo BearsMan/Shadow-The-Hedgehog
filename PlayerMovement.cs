@@ -24,12 +24,12 @@ public class PlayerMovement : MonoBehaviour
     private bool isSprinting = false;
     private bool hasBeenDamaged = false;
     private bool aerialAttackActive = false;
+    private bool inAir = false;
     public SkinnedMeshRenderer objectMaterialRender1;
     public SkinnedMeshRenderer objectMaterialRender2;
     private CharacterAnimationController animController;
     private Animator characterAnimator;
     private WeaponSystem weaponController;
-    private bool inAir;
     [Header("Audio")]
     /*
     These audio files should only play whenever the red or blue bars for the attacks are filled, and it should never play in a loop.
